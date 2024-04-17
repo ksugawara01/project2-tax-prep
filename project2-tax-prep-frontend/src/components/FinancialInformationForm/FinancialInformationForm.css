@@ -1,0 +1,7 @@
+#financial-form {
+    width: 60rem;
+}
+
+#financial-married-fieldset, #financial-deduction-fieldset {
+    margin-top: 1.5rem;
+}
