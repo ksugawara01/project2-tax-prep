@@ -1,4 +1,4 @@
-import { Label, TextInput, Form, Button, ButtonGroup } from "@trussworks/react-uswds";
+import { Label, TextInput, TextInputMask, Form, Button, ButtonGroup } from "@trussworks/react-uswds";
 import './PersonalInformationForm.css'
 import TrussStepIndicator from "../TrussStepIndicator/TrussStepIndicator";
 
@@ -30,13 +30,12 @@ import TrussStepIndicator from "../TrussStepIndicator/TrussStepIndicator";
                 <TextInput id="personal-state" name="personal-state" type="text" />
 
                 <Label htmlFor="personal-zip">Zip Code</Label>
-                <TextInput id="personal-zip" name="personal-zip" type="text" />
+                <TextInputMask id="personal-zip" name="personal-zip" type="text" mask="_____-____" pattern="^[0-9]{5}(?:-[0-9]{4})?$"/>
 
                 <Label htmlFor="personal-ssn">Social Security Number</Label>
-                <TextInput id="personal-ssn" name="personal-ssn" type="text" />
+                <TextInputMask id="personal-ssn" name="personal-ssn" type="text" mask="___ __ ____" pattern="^(?!(000|666|9))\d{3} (?!00)\d{2} (?!0000)\d{4}$" />
 
                 <ButtonGroup id="personal-button-group">
-                    <Button className="test-button" type="button" outline>Back</Button>
                     <Button className="test-button" type="button">Continue</Button>
                 </ButtonGroup>
             </Form>
