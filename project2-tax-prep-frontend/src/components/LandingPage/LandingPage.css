@@ -1,0 +1,22 @@
+#bank-icon {
+    width: 15rem;
+    margin-top: 3rem;
+}
+
+#free-return-text {
+    font-size: 5rem;
+    font-weight: bolder;
+    margin: 1rem;
+}
+
+#e-file-text {
+    font-size: 3rem;
+    margin: 1rem;
+    margin-bottom: 3rem;
+}
+
+#landing-page-button {
+    padding: 1.5rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
