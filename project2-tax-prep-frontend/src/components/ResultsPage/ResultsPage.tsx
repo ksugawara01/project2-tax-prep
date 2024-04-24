@@ -4,10 +4,13 @@ import './ResultsPage.css'
 
 import Confetti from "react-dom-confetti"
 import TrussStepIndicator from "../TrussStepIndicator/TrussStepIndicator"
+import { useTranslation } from 'react-i18next'
 
 export default function ResultsPage() {
 
     const [isConfettiActive, setIsConfettiActive] = useState(false)
+
+    const { t } = useTranslation();
 
     // Start confetti animation on mount
     useEffect(() => {
@@ -33,14 +36,14 @@ export default function ResultsPage() {
         <>
             <TrussStepIndicator personalStatus='complete' financialStatus='complete' reviewStatus='complete' resultsStatus='current'/>
             <Confetti active={ isConfettiActive } config={ config }/>
-            <div id='result-congratulations'>Congratulations on filing your federal tax return!</div>
-            <div className='result-categories'>Total Taxable Income:</div>
+            <div id='result-congratulations'>{t('results.congratulations')}</div>
+            <div className='result-categories'>{t('results.taxableIncome')}</div>
             <div>placeholder</div>
-            <div className='result-categories'>Total Taxes Owed:</div>
+            <div className='result-categories'>{t('results.taxesOwed')}</div>
             <div>placeholder</div>
-            <div className='result-categories'>Total Withholdings:</div>
+            <div className='result-categories'>{t('results.withholdings')}</div>
             <div>placeholder</div>
-            <div className='result-categories'>Your Federal Refund:</div>
+            <div className='result-categories'>{t('results.federalRefund')}</div>
             <div id='refund-amount'>$2,452</div>
         </>
     )

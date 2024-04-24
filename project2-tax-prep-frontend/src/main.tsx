@@ -8,6 +8,8 @@ import store from './store.ts'
 import '@trussworks/react-uswds/lib/uswds.css'
 import '@trussworks/react-uswds/lib/index.css'
 
+import './i18n'
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <Provider store={store}>

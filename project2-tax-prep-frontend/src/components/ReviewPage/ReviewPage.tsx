@@ -1,50 +1,53 @@
-import { Label, TextInput, Form, Button, Radio, StepIndicator, Fieldset, ButtonGroup, Table } from "@trussworks/react-uswds";
+import { Label, TextInput, Form, Button, Radio, StepIndicator, Fieldset, ButtonGroup, Table } from '@trussworks/react-uswds';
 import { Link } from 'react-router-dom'
 import './ReviewPage.css'
-import TrussStepIndicator from "../TrussStepIndicator/TrussStepIndicator";
+import TrussStepIndicator from '../TrussStepIndicator/TrussStepIndicator';
+import { useTranslation } from 'react-i18next';
 
 
  export default function ReviewPage() {
 
+    const { t } = useTranslation();
+
     return(
         <div className='flex-column-center'>
             <TrussStepIndicator personalStatus='complete' financialStatus='complete' reviewStatus='current'/>
-            <h1>Review your information</h1>
+            <h1>{t('review.reviewInformation')}</h1>
             <Table bordered={false} fullWidth>
                 <thead>
                     <tr>
-                        <th>Personal Information <Button className='review-edit-button' type="button">Edit</Button></th>
+                        <th>{t('review.personalInformation')} <Button className='review-edit-button' type='button'>{t('button.edit')}</Button></th>
 
                     </tr>
 
                 </thead>
                 <tbody>
                     <tr>
-                        <td>First Name</td>
+                        <td>{t('personalInformationForm.firstName')}</td>
                         <td>Placeholder</td>
                     </tr>
                     <tr>
-                        <td>Last Name</td>
+                        <td>{t('personalInformationForm.lastName')}</td>
                         <td>Placeholder</td>
                     </tr>
                     <tr>
-                        <td>Street Address</td>
+                        <td>{t('personalInformationForm.streetAddress')}</td>
                         <td>Placeholder</td>
                     </tr>
                     <tr>
-                        <td>City</td>
+                        <td>{t('personalInformationForm.city')}</td>
                         <td>Placeholder</td>
                     </tr>
                     <tr>
-                        <td>State</td>
+                        <td>{t('personalInformationForm.state')}</td>
                         <td>Placeholder</td>
                     </tr>
                     <tr>
-                        <td>Zip Code</td>
+                        <td>{t('personalInformationForm.zip')}</td>
                         <td>Placeholder</td>
                     </tr>
                     <tr>
-                        <td>Social Security Number</td>
+                        <td>{t('personalInformationForm.ssn')}</td>
                         <td>Placeholder</td>
                     </tr>
 
@@ -55,33 +58,33 @@ import TrussStepIndicator from "../TrussStepIndicator/TrussStepIndicator";
             <Table bordered={false} fullWidth>
                 <thead>
                     <tr>
-                        <th>Financial Information <Button className='review-edit-button' type="button">Edit</Button></th>
+                        <th>{t('review.financialInformation')} <Button className='review-edit-button' type='button'>{t('button.edit')}</Button></th>
                     </tr>
 
                 </thead>
                 <tbody>
                     <tr>
-                        <td>W2 Income</td>
+                        <td>{t('financialInformationForm.incomeW2')}</td>
                         <td>Placeholder</td>
                     </tr>
                     <tr>
-                        <td>W2 Withholdings</td>
+                        <td>{t('financialInformationForm.withholdingsW2')}</td>
                         <td>Placeholder</td>
                     </tr>
                     <tr>
-                        <td>1099 Income</td>
+                        <td>{t('financialInformationForm.income1099')}</td>
                         <td>Placeholder</td>
                     </tr>
                     <tr>
-                        <td>1099 Deductions</td>
+                        <td>{t('financialInformationForm.deductions')}</td>
                         <td>Placeholder</td>
                     </tr>
                     <tr>
-                        <td>Marital Status</td>
+                        <td>{t('review.maritalStatus')}</td>
                         <td>Placeholder</td>
                     </tr>
                     <tr>
-                        <td>Deduction type</td>
+                        <td>{t('review.deductionType')}</td>
                         <td>Placeholder</td>
                     </tr>
 
@@ -89,9 +92,9 @@ import TrussStepIndicator from "../TrussStepIndicator/TrussStepIndicator";
 
             </Table>
                 
-                <ButtonGroup id="financial-button-group">
-                    <Button className="test-button" type="button" outline>Back</Button>
-                    <Button className="test-button" type="button">Continue</Button>
+                <ButtonGroup id='financial-button-group'>
+                    <Button className='test-button' type='button' outline>{t('button.back')}</Button>
+                    <Button className='test-button' type='button'>{t('button.continue')}</Button>
                 </ButtonGroup>
 
         </div>

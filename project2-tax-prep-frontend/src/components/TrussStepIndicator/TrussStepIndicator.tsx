@@ -1,8 +1,11 @@
-import { StepIndicator, StepIndicatorStep } from "@trussworks/react-uswds"
+import { StepIndicator, StepIndicatorStep } from '@trussworks/react-uswds'
 import './TrussStepIndicator.css'
+import { useTranslation } from 'react-i18next';
 
 export default function TrussStepIndicator(props: any) {
     const { personalStatus, financialStatus, reviewStatus, resultsStatus } = props;
+
+    const { t } = useTranslation();
 
     return(
         <div id='step-indicator-container'>
@@ -14,19 +17,19 @@ export default function TrussStepIndicator(props: any) {
             counters='small'
             >
                 <StepIndicatorStep
-                    label="Personal information"
+                    label={t('stepIndicator.personalInformation')}
                     status={personalStatus}
                 />
                 <StepIndicatorStep
-                    label="Financial Information"
+                    label={t('stepIndicator.financialInformation')}
                     status={financialStatus}
                 />
                 <StepIndicatorStep
-                    label="Review and Submit"
+                    label={t('stepIndicator.reviewAndSubmit')}
                     status={reviewStatus}
                 />
                 <StepIndicatorStep
-                    label="Results"
+                    label={t('stepIndicator.results')}
                     status={resultsStatus}
                 />
             </StepIndicator>

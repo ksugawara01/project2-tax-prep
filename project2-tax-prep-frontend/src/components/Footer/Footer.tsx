@@ -1,9 +1,12 @@
+import { useTranslation } from 'react-i18next';
 import './Footer.css';
 
 export default function Footer() {
+
+    const { t } = useTranslation();
     return(
         <div id='footer'>
-            <div >License Agreement | Privacy | Manage cookies | Security | Cobrowse | Give feedback</div>
+            <div >{t('footer.links')}</div>
             <div>© 2024 Fake Tax Company</div>
         </div>
     )

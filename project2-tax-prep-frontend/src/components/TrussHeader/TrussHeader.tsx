@@ -1,34 +1,26 @@
 import { Header, NavMenuButton, Title, PrimaryNav, Search, NavDropDownButton, Menu, LanguageSelector } from '@trussworks/react-uswds'
 import { useState } from 'react'
 import './TrussHeader.css'
+import { useTranslation } from 'react-i18next';
 
 export default function TrussHeader() {
+
+    const { t } = useTranslation();
+
     const [expanded, setExpanded] = useState(false);
 
     const onClick = (): void => setExpanded(prvExpanded => !prvExpanded);
 
     const testItemsMenu = [
-      <a href="#two" key="two" className="usa-nav__link">
+      <a href='#two' key='two' className='usa-nav__link'>
           <span>Parent link</span>
       </a>,
-      <a href="#three" key="three" className="usa-nav__link">
+      <a href='#three' key='three' className='usa-nav__link'>
           <span>Parent link</span>
       </a>,
       <LanguageSelector
-          label="Languages"
+          label={t('header.languages')}
           langs={[
-              {
-                attr: 'ar',
-                label: 'العربية',
-                label_local: 'Arabic',
-                on_click: function Ga(){}
-              },
-              {
-                attr: 'zh',
-                label: '简体字',
-                label_local: 'Chinese - Simplified',
-                on_click: function Ga(){}
-              },
               {
                 attr: 'en',
                 label: 'English',
@@ -41,21 +33,9 @@ export default function TrussHeader() {
                 on_click: function Ga(){}
               },
               {
-                attr: 'fr',
-                label: 'Français',
-                label_local: 'French',
-                on_click: function Ga(){}
-              },
-              {
-                attr: 'it',
-                label: 'Italiano',
-                label_local: 'Italian',
-                on_click: function Ga(){}
-              },
-              {
-                attr: 'ru',
-                label: 'Pусский',
-                label_local: 'Russian',
+                attr: 'jp',
+                label: '日本語',
+                label_local: 'Japanese',
                 on_click: function Ga(){}
               }
           ]}
@@ -64,8 +44,8 @@ export default function TrussHeader() {
 
     return(
         <Header id='truss-header' basic={true} showMobileOverlay={expanded}>
-            <div className="usa-nav-container">
-                <div className="usa-navbar">
+            <div className='usa-nav-container'>
+                <div className='usa-navbar'>
                     <Title>Fake Tax Company</Title>
                 </div>
                 <PrimaryNav items={testItemsMenu} mobileExpanded={expanded} onToggleMobileNav={onClick}></PrimaryNav>
