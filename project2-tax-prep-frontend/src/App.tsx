@@ -9,7 +9,6 @@ import PersonalInformationForm from './components/PersonalInformationForm/Person
 import ReviewPage from './components/ReviewPage/ReviewPage.tsx';
 import ResultsPage from './components/ResultsPage/ResultsPage.tsx'
 
-import TestComponent from './components/TestComponent/TestComponent.tsx'
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -36,7 +35,6 @@ export default function App() {
                 <Route path='/financial-information' element={<FinancialInformationForm />} />
                 <Route path='/review' element={<ReviewPage />} />
                 <Route path='/results' element={<ResultsPage />} />
-                <Route path='/test' element={<TestComponent />} />
             </Routes>
             <Footer />
         </div>
