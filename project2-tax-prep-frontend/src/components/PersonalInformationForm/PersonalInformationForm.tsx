@@ -2,13 +2,20 @@ import { Label, TextInput, TextInputMask, Form, Button, ButtonGroup } from '@tru
 import './PersonalInformationForm.css'
 import TrussStepIndicator from '../TrussStepIndicator/TrussStepIndicator';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
  export default function PersonalInformationForm() {
 
     const { t } = useTranslation();
 
+    const navigate = useNavigate();
+
     const handleSubmit = (event : any) => {
         event.preventDefault();
+    }
+
+    const handleContinue = () => {
+        navigate('/financial-information')
     }
 
     return(
@@ -38,7 +45,7 @@ import { useTranslation } from 'react-i18next';
                 <TextInputMask id='personal-ssn' name='personal-ssn' type='text' mask='___ __ ____' pattern='^(?!(000|666|9))\d{3} (?!00)\d{2} (?!0000)\d{4}$' />
 
                 <ButtonGroup id='personal-button-group'>
-                    <Button className='test-button' type='button'>{t('button.continue')}</Button>
+                    <Button className='test-button' type='button' onClick={handleContinue}>{t('button.continue')}</Button>
                 </ButtonGroup>
             </Form>
         </>

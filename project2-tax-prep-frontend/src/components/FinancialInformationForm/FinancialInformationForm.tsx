@@ -1,5 +1,5 @@
 import { Label, TextInput, Form, Button, Radio, StepIndicator, Fieldset, ButtonGroup} from '@trussworks/react-uswds';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './FinancialInformationForm.css'
 import TrussStepIndicator from '../TrussStepIndicator/TrussStepIndicator';
 import { useTranslation } from 'react-i18next';
@@ -9,8 +9,18 @@ import { useTranslation } from 'react-i18next';
 
     const { t } = useTranslation();
 
+    const navigate = useNavigate();
+    
     const handleSubmit = (event : any) => {
         event.preventDefault();
+    }
+
+    const handleBack = () => {
+        navigate('/personal-information')
+    }
+
+    const handleContinue = () => {
+        navigate('/review')
     }
 
     return(
@@ -42,8 +52,8 @@ import { useTranslation } from 'react-i18next';
                 </Fieldset>
                 
                 <ButtonGroup id='financial-button-group'>
-                    <Button className='test-button' type='button' outline>{t('button.back')}</Button>
-                    <Button className='test-button' type='button'>{t('button.continue')}</Button>
+                    <Button className='test-button' type='button' outline onClick={handleBack}>{t('button.back')}</Button>
+                    <Button className='test-button' type='button' onClick={handleContinue}>{t('button.continue')}</Button>
                 </ButtonGroup>
             </Form>
         </>

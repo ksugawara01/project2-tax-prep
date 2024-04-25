@@ -1,5 +1,5 @@
 import { Label, TextInput, Form, Button, Radio, StepIndicator, Fieldset, ButtonGroup, Table } from '@trussworks/react-uswds';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './ReviewPage.css'
 import TrussStepIndicator from '../TrussStepIndicator/TrussStepIndicator';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +8,16 @@ import { useTranslation } from 'react-i18next';
  export default function ReviewPage() {
 
     const { t } = useTranslation();
+
+    const navigate = useNavigate();
+
+    const handleBack = () => {
+        navigate('/financial-information')
+    }
+
+    const handleContinue = () => {
+        navigate('/results')
+    }
 
     return(
         <div className='flex-column-center'>
@@ -93,8 +103,8 @@ import { useTranslation } from 'react-i18next';
             </Table>
                 
                 <ButtonGroup id='financial-button-group'>
-                    <Button className='test-button' type='button' outline>{t('button.back')}</Button>
-                    <Button className='test-button' type='button'>{t('button.continue')}</Button>
+                    <Button className='test-button' type='button' outline onClick={handleBack}>{t('button.back')}</Button>
+                    <Button className='test-button' type='button' onClick={handleContinue}>{t('button.continue')}</Button>
                 </ButtonGroup>
 
         </div>
