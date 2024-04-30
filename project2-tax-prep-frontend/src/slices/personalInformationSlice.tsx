@@ -4,13 +4,14 @@ const personalInformationSlice = createSlice({
     name: 'personalInformation',
     initialState: {
         personalInformationId: null,
-        firstName: null,
-        lastName: null,
-        streetAddress: null,
-        city: null,
-        state: null,
-        zip: null,
-        ssn: null,
+        firstName: '',
+        lastName: '',
+        streetAddress: '',
+        city: '',
+        state: '',
+        zip: '',
+        birthDate: '',
+        ssn: '',
         userId: null
     },
     reducers: {
@@ -25,6 +26,7 @@ const personalInformationSlice = createSlice({
             state.city = personalInformation.city;
             state.state = personalInformation.state;
             state.zip = personalInformation.zip;
+            state.birthDate = personalInformation.birthDate;
             state.ssn = personalInformation.ssn;
             state.userId = personalInformation.userId;
 

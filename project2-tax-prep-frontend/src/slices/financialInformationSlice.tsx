@@ -3,13 +3,13 @@ import { createSlice } from '@reduxjs/toolkit'
 const financialInformationSlice = createSlice({
     name: 'financialInformation',
     initialState: {
-        financialInformationId: null,
-        incomeW2: null,
-        withholdingsW2: null,
-        income1099: null,
-        deductions: null,
-        isMarried: null,
-        isStandardDeduction: null,
+        financialInformationId: '',
+        incomeW2: '',
+        withholdingsW2: '',
+        income1099: '',
+        deductions: '',
+        isMarried: '',
+        isStandardDeduction: '',
         userId: null
     },
     reducers: {
