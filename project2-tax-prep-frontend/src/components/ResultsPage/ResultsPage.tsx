@@ -24,7 +24,7 @@ export default function ResultsPage() {
         startVelocity: 60,
         elementCount: 300,
         dragFriction: 0.12,
-        duration: 30000,
+        duration: 3000,
         stagger: 1,
         width: "10px",
         height: "10px",
