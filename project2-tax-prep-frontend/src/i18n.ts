@@ -37,6 +37,7 @@ i18n
                     city: 'City',
                     state: 'State',
                     zip: 'Zip Code',
+                    birthDate: 'Birth Date',
                     ssn: 'Social Security Number'
                 },
                 financialInformationForm: {
@@ -98,6 +99,7 @@ i18n
                     city: 'Ciudad',
                     state: 'Estado',
                     zip: 'Código Postal',
+                    birthDate: 'Fecha de Nacimiento',
                     ssn: 'Número de Seguro Social'
                 },
                 financialInformationForm: {
@@ -159,6 +161,7 @@ i18n
                     city: '市',
                     state: '州',
                     zip: '郵便番号',
+                    birthDate: '生年月日',
                     ssn: '社会保障番号'
                 },
                 financialInformationForm: {
