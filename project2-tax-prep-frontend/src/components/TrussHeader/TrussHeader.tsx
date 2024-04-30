@@ -17,11 +17,6 @@ export default function TrussHeader() {
 
     const onClick = (): void => setExpanded(prvExpanded => !prvExpanded);
 
-    const handleLanguageSwitch = () => {
-        dispatch(updateCurrentLanguage('en'))
-        
-    }
-
         // Log financialInformation whenever it changes
         useEffect(() => {
           console.log('current language:', currentLanguage);
