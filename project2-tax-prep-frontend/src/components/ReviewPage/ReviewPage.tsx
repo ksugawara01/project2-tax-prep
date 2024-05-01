@@ -1,4 +1,4 @@
-import { Label, TextInput, Form, Button, Radio, StepIndicator, Fieldset, ButtonGroup, Table } from '@trussworks/react-uswds';
+import { Label, TextInput, Form, Button, Radio, StepIndicator, Fieldset, ButtonGroup, Table, Alert } from '@trussworks/react-uswds';
 import { Link, useNavigate } from 'react-router-dom'
 import './ReviewPage.css'
 import TrussStepIndicator from '../TrussStepIndicator/TrussStepIndicator';
@@ -12,6 +12,50 @@ import { useSelector } from 'react-redux';
     const personalInformation = useSelector((store : any) => store.personalInformation)
 
     const financialInformation = useSelector((store : any) => store.financialInformation)
+
+    const containsFirstName = (personalInformation.firstName !== '' ? true : false)
+    const containsLastName = (personalInformation.lastName !== '' ? true : false)
+    const containsStreetAddress = (personalInformation.streetAddress !== '' ? true : false)
+    const containsCity = (personalInformation.city !== '' ? true : false)
+    const containsState = (personalInformation.state !== '' ? true : false)
+    const containsZip = (personalInformation.zip !== '' ? true : false)
+    const containsBirthDate = (personalInformation.birthDate !== '' ? true : false)
+    const containsSsn = (personalInformation.ssn !== '' ? true : false)
+    const hasAllPersonalRequirements = containsFirstName && containsLastName && containsStreetAddress && containsCity && containsState && containsZip && containsBirthDate && containsSsn
+
+    const personalRequirementsAlert = <Alert className='alert' type='error' heading='Personal Information Requirements' headingLevel='h4' validation>
+        <ul>
+            {containsFirstName ? null : <li>You must enter your First Name</li>}
+            {containsLastName ? null : <li>You must enter your Last Name</li>}
+            {containsStreetAddress ? null : <li>You must enter your Street Address</li>}
+            {containsCity ? null : <li>You must enter your City</li>}
+            {containsState ? null : <li>You must enter your State</li>}
+            {containsZip ? null : <li>You must enter your Zip Code</li>}
+            {containsBirthDate ? null : <li>You must enter your Birth Date</li>}
+            {containsSsn ? null : <li>You must enter your Social Security Number</li>}
+        </ul>
+    </Alert>
+
+    const containsIncomeW2 = ((financialInformation.incomeW2 !== '') ? true : false)
+    const containsWithholdingsW2 = (financialInformation.withholdingsW2 !== '' ? true : false)
+    const containsIncome1099 = (financialInformation.income1099 !== '' ? true : false)
+    const containsDeductions = (financialInformation.deductions !== '' ? true : false)
+    const containsIsMarried = (financialInformation.isMarried !== '' ? true : false)
+    const containsIsStandardDeduction = (financialInformation.isStandardDeduction !== '' ? true : false)
+    const hasAllFinancialRequirements = containsIncomeW2 && containsWithholdingsW2 && containsIncome1099 && containsDeductions && containsIsMarried && containsIsStandardDeduction
+
+    const financialRequirementsAlert = <Alert className='alert' type='error' heading='Financial Information Requirements' headingLevel='h4' validation>
+        <ul>
+            {containsIncomeW2 ? null : <li>You must enter your W2 Income</li>}
+            {containsWithholdingsW2 ? null : <li>You must enter your W2 Withholdings</li>}
+            {containsIncome1099 ? null : <li>You must enter your 1099 Income</li>}
+            {containsDeductions ? null : <li>You must enter your 1099 Deductions</li>}
+            {containsIsMarried ? null : <li>You must enter your Marital Status</li>}
+            {containsIsStandardDeduction ? null : <li>You must enter your Deduction Type</li>}
+        </ul>
+    </Alert>
+
+
 
     const { t } = useTranslation();
 
@@ -59,6 +103,9 @@ import { useSelector } from 'react-redux';
         <div className='flex-column-center'>
             <TrussStepIndicator personalStatus='complete' financialStatus='complete' reviewStatus='current'/>
             <h1>{t('review.reviewInformation')}</h1>
+
+            {hasAllPersonalRequirements ? null : personalRequirementsAlert}
+
             <Table bordered={false} fullWidth>
                 <thead>
                     <tr>
@@ -92,6 +139,10 @@ import { useSelector } from 'react-redux';
                         <td>{personalInformation.zip}</td>
                     </tr>
                     <tr>
+                        <td>{t('personalInformationForm.birthDate')}</td>
+                        <td>{personalInformation.birthDate}</td>
+                    </tr>
+                    <tr>
                         <td>{t('personalInformationForm.ssn')}</td>
                         <td>{personalInformation.ssn}</td>
                     </tr>
@@ -99,6 +150,8 @@ import { useSelector } from 'react-redux';
                 </tbody>
 
             </Table>
+
+            {hasAllFinancialRequirements ? null : financialRequirementsAlert}
 
             <Table bordered={false} fullWidth>
                 <thead>
@@ -138,8 +191,12 @@ import { useSelector } from 'react-redux';
             </Table>
                 
                 <ButtonGroup id='financial-button-group'>
-                    <Button className='test-button' type='button' outline onClick={handleBack}>{t('button.back')}</Button>
-                    <Button className='test-button' type='button' onClick={handleContinue}>{t('button.continue')}</Button>
+                    <Button type='button' outline onClick={handleBack}>{t('button.back')}</Button>
+                    {
+                        (hasAllFinancialRequirements && hasAllPersonalRequirements) ?
+                        <Button type='button' onClick={handleContinue}>{t('button.continue')}</Button> :
+                        <Button type='button' disabled>{t('button.continue')}</Button>
+                    }
                 </ButtonGroup>
 
         </div>

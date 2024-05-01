@@ -73,10 +73,10 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
                 <TextInput id='financial-w2-withholdings' name='withholdingsW2' type='number' value={formData.withholdingsW2} onChange={handleFormChange}/>
 
                 <Label htmlFor='income1099'>{t('financialInformationForm.income1099')}</Label>
-                <TextInput id='financial-1099-income' name='income1099' type='text' value={formData.income1099} onChange={handleFormChange}/>
+                <TextInput id='financial-1099-income' name='income1099' type='number' value={formData.income1099} onChange={handleFormChange}/>
 
                 <Label htmlFor='deductions'>{t('financialInformationForm.deductions')}</Label>
-                <TextInput id='financial-1099-deduction' name='deductions' type='text' value={formData.deductions} onChange={handleFormChange}/>
+                <TextInput id='financial-1099-deduction' name='deductions' type='number' value={formData.deductions} onChange={handleFormChange}/>
 
                 <Fieldset id='financial-married-fieldset'>
                     <legend>{t('financialInformationForm.isMarried')}</legend>
@@ -91,8 +91,8 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
                 </Fieldset>
                 
                 <ButtonGroup id='financial-button-group'>
-                    <Button className='test-button' type='submit' outline onClick={handleBack}>{t('button.back')}</Button>
-                    <Button className='test-button' type='submit' onClick={handleContinue}>{t('button.continue')}</Button>
+                    <Button type='submit' outline onClick={handleBack}>{t('button.back')}</Button>
+                    <Button type='submit' onClick={handleContinue}>{t('button.continue')}</Button>
                 </ButtonGroup>
             </Form>
         </>

@@ -1,4 +1,4 @@
-import { Label, TextInput, TextInputMask, Form, Button, ButtonGroup, Fieldset, DateInputGroup, FormGroup, Select, DateInput, DatePicker } from '@trussworks/react-uswds';
+import { Label, TextInput, TextInputMask, Form, Button, ButtonGroup, Fieldset, DateInputGroup, FormGroup, Select, DateInput, DatePicker, ErrorMessage } from '@trussworks/react-uswds';
 import './PersonalInformationForm.css'
 import TrussStepIndicator from '../TrussStepIndicator/TrussStepIndicator';
 import { useTranslation } from 'react-i18next';
@@ -15,12 +15,24 @@ import { useEffect, useState } from 'react';
 
     const navigate = useNavigate();
 
+
     // Select personal information from the store
     const personalInformation = useSelector((store : any) => store.personalInformation)
 
     const dispatch = useDispatch();
 
     const [formData, setFormData] = useState(personalInformation)
+
+    // Regular Expressions
+    const birthDateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+    const ssnRegex = /^\d{3} \d{2} \d{4}$/;
+    const zipRegex = /^\d{5}$/;
+
+
+    // Check if form data matches the regular expressions
+    const hasBirthDateError = (!birthDateRegex.test(formData.birthDate)) && formData.birthDate !== '';
+    const hasSsnError = (!ssnRegex.test(formData.ssn)) && formData.ssn !== '';
+    const hasZipError = (!zipRegex.test(formData.zip)) && formData.zip !== '';
 
     // Updates the form data when the user changes an input
     const handleFormChange = (event : any) => {
@@ -42,6 +54,7 @@ import { useEffect, useState } from 'react';
 
         // Send a post request if there is no existing personal information
         if (formData.personalInformationId == null) {
+            formData.userId = //get userId of currently logged in user
             // Send post request to the backend to create the personal information the database
             personalInformationService.createPersonalInformation(formData)
             .then((newPersonalInformation) => {
@@ -88,37 +101,46 @@ import { useEffect, useState } from 'react';
                 <Label htmlFor='personal-state'>{t('personalInformationForm.state')}</Label>
                 <TextInput id='personal-state' name='state' type='text' value={formData.state} onChange={handleFormChange}/>
 
-                <Label htmlFor='personal-zip'>{t('personalInformationForm.zip')}</Label>
-                <TextInputMask id='personal-zip' name='zip' type='text' mask='_____' pattern='^[0-9]{5}' value={formData.zip} onChange={handleFormChange}/>
+                <FormGroup error={hasZipError} >
+                    <Label htmlFor='personal-zip'>{t('personalInformationForm.zip')}</Label>
+                    {hasZipError ? <ErrorMessage >Zip Code must be 5 digits</ErrorMessage> : null}
+                    <TextInputMask id='personal-zip' name='zip' type='text' mask='_____' pattern='^[0-9]{5}' value={formData.zip} onChange={handleFormChange}/>
+                </FormGroup>
 
-                <FormGroup>
+                <FormGroup error={hasBirthDateError}>
                     <Label
                         htmlFor="birthDate"
-                        id="personal-birth-date-label"
+                        id='personal-birth-date-label'
                         >
                         {t('personalInformationForm.birthDate')}
                     </Label>
                     <div
-                        className="usa-hint"
-                        id="personal-birth-date-hint"
+                        className='usa-hint'
+                        id='personal-birth-date-hint'
                     >
                         mm/dd/yyyy
                     </div>
+                    {hasBirthDateError ? <ErrorMessage >Birth Date must be in mm/dd/yyyy format</ErrorMessage> : null}
                     <DatePicker
-                        aria-describedby="personal-birth-date-hint"
-                        aria-labelledby="personal-birth-date-label"
-                        id="personal-birth-date"
-                        name="birthDate"
-                        value={formData.birthDate}
+                        aria-describedby='personal-birth-date-hint'
+                        aria-labelledby='personal-birth-date-label'
+                        id='personal-birth-date'
+                        name='birthDate'
                         onChange={handleDateChange}
                     />
                 </FormGroup>
 
-                <Label htmlFor='personal-ssn'>{t('personalInformationForm.ssn')}</Label>
-                <TextInputMask id='personal-ssn' name='ssn' type='text' mask='___ __ ____' pattern='^(?!(000|666|9))\d{3} (?!00)\d{2} (?!0000)\d{4}$' value={formData.ssn} onChange={handleFormChange}/>
-
+                <FormGroup error={hasSsnError} >
+                    <Label htmlFor='personal-ssn'>{t('personalInformationForm.ssn')}</Label>
+                    {hasSsnError ? <ErrorMessage >Social Security Number must be 9 digits</ErrorMessage> : null}
+                    <TextInputMask id='personal-ssn' name='ssn' type='text' mask='___ __ ____' pattern='^(?!(000|666|9))\d{3} (?!00)\d{2} (?!0000)\d{4}$' value={formData.ssn} onChange={handleFormChange}/>
+                </FormGroup>
                 <ButtonGroup id='personal-button-group'>
-                    <Button className='test-button' type='submit' onClick={handleContinue}>{t('button.continue')}</Button>
+                    {
+                        (!hasBirthDateError && !hasSsnError && !hasZipError) ?
+                        <Button type='button' onClick={handleContinue}>{t('button.continue')}</Button> :
+                        <Button type='button' disabled>{t('button.continue')}</Button>
+                    }
                 </ButtonGroup>
             </Form>
         </>
