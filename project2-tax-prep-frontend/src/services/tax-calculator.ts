@@ -3,7 +3,7 @@ import axios from 'axios'
 const baseUrl = 'http://localhost:8080/calculate'
 
 // Get the single filer tax amount
-const getSingleFilerTax = (taxableIncome : any) => {
+const getSingleFilerTax = (taxableIncome : number) => {
     const request = axios.get(`${baseUrl}/single`, {
         params: {
             taxableIncome: taxableIncome
@@ -13,7 +13,7 @@ const getSingleFilerTax = (taxableIncome : any) => {
 }
 
 // Get the married filer tax amount
-const getMarriedFilerTax = (taxableIncome : any) => {
+const getMarriedFilerTax = (taxableIncome : number) => {
     const request = axios.get(`${baseUrl}/married`, {
         params: {
             taxableIncome: taxableIncome
