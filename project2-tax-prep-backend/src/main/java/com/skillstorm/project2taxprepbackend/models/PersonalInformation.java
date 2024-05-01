@@ -34,6 +34,9 @@ public class PersonalInformation {
     @Column(name = "zip")
     private String zip;
 
+    @Column(name = "birth_date")
+    private String birthDate;
+
     @Column(name = "ssn")
     private String ssn;
 
@@ -45,19 +48,20 @@ public class PersonalInformation {
     }
 
     public PersonalInformation(String firstName, String lastName, String streetAddress, String city, String stateName,
-            String zip, String ssn, @NotNull int userId) {
+            String zip, String birthDate, String ssn, @NotNull int userId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.streetAddress = streetAddress;
         this.city = city;
         this.stateName = stateName;
         this.zip = zip;
+        this.birthDate = birthDate;
         this.ssn = ssn;
         this.userId = userId;
     }
 
     public PersonalInformation(int personalInformationId, String firstName, String lastName, String streetAddress,
-            String city, String stateName, String zip, String ssn, @NotNull int userId) {
+            String city, String stateName, String zip, String birthDate, String ssn, @NotNull int userId) {
         this.personalInformationId = personalInformationId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -65,6 +69,7 @@ public class PersonalInformation {
         this.city = city;
         this.stateName = stateName;
         this.zip = zip;
+        this.birthDate = birthDate;
         this.ssn = ssn;
         this.userId = userId;
     }
@@ -113,7 +118,7 @@ public class PersonalInformation {
         return stateName;
     }
 
-    public void setState(String stateName) {
+    public void setStateName(String stateName) {
         this.stateName = stateName;
     }
 
@@ -123,6 +128,14 @@ public class PersonalInformation {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getSsn() {
@@ -152,6 +165,7 @@ public class PersonalInformation {
         result = prime * result + ((city == null) ? 0 : city.hashCode());
         result = prime * result + ((stateName == null) ? 0 : stateName.hashCode());
         result = prime * result + ((zip == null) ? 0 : zip.hashCode());
+        result = prime * result + ((birthDate == null) ? 0 : birthDate.hashCode());
         result = prime * result + ((ssn == null) ? 0 : ssn.hashCode());
         result = prime * result + userId;
         return result;
@@ -198,6 +212,11 @@ public class PersonalInformation {
                 return false;
         } else if (!zip.equals(other.zip))
             return false;
+        if (birthDate == null) {
+            if (other.birthDate != null)
+                return false;
+        } else if (!birthDate.equals(other.birthDate))
+            return false;
         if (ssn == null) {
             if (other.ssn != null)
                 return false;
@@ -211,7 +230,7 @@ public class PersonalInformation {
     @Override
     public String toString() {
         return "PersonalInformation [personalInformationId=" + personalInformationId + ", firstName=" + firstName
-                + ", lastName=" + lastName + ", streetAddress=" + streetAddress + ", city=" + city + ", stateName=" + stateName
-                + ", zip=" + zip + ", ssn=" + ssn + ", userId=" + userId + "]";
+                + ", lastName=" + lastName + ", streetAddress=" + streetAddress + ", city=" + city + ", stateName="
+                + stateName + ", zip=" + zip + ", birthDate=" + birthDate + ", ssn=" + ssn + ", userId=" + userId + "]";
     }
 }
