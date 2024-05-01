@@ -5,3 +5,7 @@ th, td, tr {
 .review-edit-button {
     margin-left: 2rem;
 }
+
+.alert {
+    width: 100%
+}
