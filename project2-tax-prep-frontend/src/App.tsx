@@ -12,6 +12,8 @@ import ResultsPage from './components/ResultsPage/ResultsPage.tsx'
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import SignInForm from './components/SignInForm/SignInForm.tsx';
+import CreateAccountForm from './components/CreateAccountForm/CreateAccountForm.tsx';
 
 export default function App() {
 
@@ -35,6 +37,8 @@ export default function App() {
                 <Route path='/financial-information' element={<FinancialInformationForm />} />
                 <Route path='/review' element={<ReviewPage />} />
                 <Route path='/results' element={<ResultsPage />} />
+                <Route path='/sign-in' element={<SignInForm />} />
+                <Route path='/create-account' element={<CreateAccountForm />} /> 
             </Routes>
             <Footer />
         </div>
