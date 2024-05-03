@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.skillstorm.project2taxprepbackend.services.PersonalInformationService;
 import com.skillstorm.project2taxprepbackend.models.PersonalInformation;
@@ -36,8 +37,15 @@ public class PersonalInformationController {
     // view personal information by user id
     @GetMapping("/user-id/{userId}")
     public ResponseEntity<PersonalInformation> getPersonalInformationByUserId(@PathVariable int userId) {
-        PersonalInformation personalInformation = personalInformationService.getPersonalInformationByUserId(userId);
-        return new ResponseEntity<PersonalInformation>(personalInformation, HttpStatus.OK);
+
+
+        try {
+            PersonalInformation personalInformation = personalInformationService.getPersonalInformationByUserId(userId);
+            return new ResponseEntity<PersonalInformation>(personalInformation, HttpStatus.OK);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).build();
+        }
+
     }
 
     // update personal information

@@ -11,7 +11,7 @@ const createPersonalInformation = (newPersonalInformation : any) => {
 // Get personal information by user id
 const getPersonalInformationByUserId = (userId : any) => {
     const request = axios.get(`${baseUrl}/user-id/${userId}`)
-    return request.then(response => response.data)
+    return request.then(response => [response.data, response.status])
 }
 
 // Update personal information

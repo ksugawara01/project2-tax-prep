@@ -25,7 +25,7 @@ export default function ResultsPage() {
     const totalIncome = Number(financialInformation.incomeW2) + Number(financialInformation.income1099);
 
     const calculateReturn = (taxableIncome : number) => {
-        if (financialInformation.isMarried) {
+        if (financialInformation.married) {
             taxCalculatorService.getMarriedFilerTax(taxableIncome)
             .then((taxesOwed) => {
 
@@ -60,19 +60,19 @@ export default function ResultsPage() {
         console.log('financial information', financialInformation)
 
         // Standard deduction calculation
-        if (financialInformation.isStandardDeduction) {
+        if (financialInformation.standardDeduction) {
             const deductions = 13850; // the standard deduction for 2023 taxes is $13850
             let taxable = totalIncome - deductions;
             if (taxable < 0) {taxable = 0}
 
             setTaxableIncome(taxable)
             calculateReturn(taxable);
-            console.log('total income', totalIncome)
+
         // Itemized Deduction calculation 
         } else {
             const deductions = financialInformation.deductions;
             let taxable = totalIncome - deductions;
-            if (taxable > 0) {taxable = 0}
+            if (taxable < 0) {taxable = 0}
 
             setTaxableIncome(taxable)
             calculateReturn(taxable);
@@ -93,7 +93,10 @@ export default function ResultsPage() {
         height: "10px",
         perspective: "500px",
         colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
-      };
+    };
+
+    const positiveRefund = <div id='positive-refund'>${returnAmount.toFixed(2)}</div>
+    const negativeRefund = <div id='negative-refund'>${returnAmount.toFixed(2)}</div>
 
     return(
         <>
@@ -107,7 +110,7 @@ export default function ResultsPage() {
             <div className='result-categories'>{t('results.withholdings')}</div>
             <div>${Number(financialInformation.withholdingsW2).toFixed(2)}</div>
             <div className='result-categories'>{t('results.federalRefund')}</div>
-            <div id='refund-amount'>${returnAmount.toFixed(2)}</div>
+            {returnAmount >= 0 ? positiveRefund : negativeRefund}
         </>
     )
 }

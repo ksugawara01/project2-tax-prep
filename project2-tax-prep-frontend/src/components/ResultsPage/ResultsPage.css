@@ -12,14 +12,14 @@
     margin-bottom: .5rem;
 }
 
-#refund-amount {
+#positive-refund {
     color: green;
     font-weight: bold;
     font-size: 4rem;
 }
 
-#negative-refund-amount {
-    color: red;
+#negative-refund {
+    color: rgb(190, 0, 0);
     font-weight: bold;
     font-size: 4rem;
 }

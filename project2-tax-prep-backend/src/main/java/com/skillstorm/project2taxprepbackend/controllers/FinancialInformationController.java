@@ -1,7 +1,5 @@
 package com.skillstorm.project2taxprepbackend.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.skillstorm.project2taxprepbackend.models.FinancialInformation;
 import com.skillstorm.project2taxprepbackend.services.FinancialInformationService;
@@ -35,21 +34,18 @@ public class FinancialInformationController {
         return new ResponseEntity<FinancialInformation>(newFinancialInformation, HttpStatus.CREATED);
     }
 
-
-    // view financial information by user id
-    @GetMapping
-    public ResponseEntity<List<FinancialInformation>> getFinancialInformation() {
-        List<FinancialInformation> financialInformation = financialInformationService.getFinancialInformation();
-        System.out.println("this is the controller financial information: " + financialInformation);
-        return new ResponseEntity<List<FinancialInformation>>(financialInformation, HttpStatus.OK);
-    }
-
-        
-    // view financial information by user id
+        // view financial information by user id
     @GetMapping("/user-id/{userId}")
     public ResponseEntity<FinancialInformation> getFinancialInformationByUserId(@PathVariable int userId) {
-        FinancialInformation financialInformation = financialInformationService.getFinancialInformationByUserId(userId);
-        return new ResponseEntity<FinancialInformation>(financialInformation, HttpStatus.OK);
+
+
+        try {
+            FinancialInformation financialInformation = financialInformationService.getFinancialInformationByUserId(userId);
+            return new ResponseEntity<FinancialInformation>(financialInformation, HttpStatus.OK);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).build();
+        }
+
     }
 
     // update financial information

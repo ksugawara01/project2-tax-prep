@@ -1,10 +1,9 @@
 package com.skillstorm.project2taxprepbackend.services;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.skillstorm.project2taxprepbackend.models.PersonalInformation;
 import com.skillstorm.project2taxprepbackend.repositories.PersonalInformationRepository;
@@ -24,6 +23,10 @@ public class PersonalInformationService {
     // Get personal information by user id
     public PersonalInformation getPersonalInformationByUserId(int userId) {
         PersonalInformation personalInformation = personalInformationRepository.findByUserId(userId);
+
+        if (personalInformation == null) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Resource not found with id: " + userId);
+        }
 
         return personalInformation;
     }

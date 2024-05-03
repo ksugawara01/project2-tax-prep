@@ -34,10 +34,28 @@ public class FinancialInformation {
     private double deductions;
 
     @Column(name = "is_married")
-    private boolean isMarried;
+    private boolean married;
 
     @Column(name = "is_standard_deduction")
-    private boolean isStandardDeduction;
+    private boolean standardDeduction;
+    
+    @Column(name = "income_w2_default")
+    private boolean incomeW2Default;
+
+    @Column(name = "withholdings_w2_default")
+    private boolean withholdingsW2Default;
+
+    @Column(name = "income_1099_default")
+    private boolean income1099Default;
+
+    @Column(name = "deductions_default")
+    private boolean deductionsDefault;
+
+    @Column(name = "is_married_default")
+    private boolean marriedDefault;
+
+    @Column(name = "is_standard_deduction_default")
+    private boolean standardDeductionDefault;
 
     @Column(name="user_id", unique = true)
     @NotNull
@@ -47,26 +65,41 @@ public class FinancialInformation {
     }
 
     public FinancialInformation(@Min(0) double incomeW2, @Min(0) double withholdingsW2, @Min(0) double income1099,
-            @Min(0) double deductions, boolean isMarried, boolean isStandardDeduction, @NotNull int userId) {
+            @Min(0) double deductions, boolean married, boolean standardDeduction, boolean incomeW2Default,
+            boolean withholdingsW2Default, boolean income1099Default, boolean deductionsDefault, boolean marriedDefault,
+            boolean standardDeductionDefault, @NotNull int userId) {
         this.incomeW2 = incomeW2;
         this.withholdingsW2 = withholdingsW2;
         this.income1099 = income1099;
         this.deductions = deductions;
-        this.isMarried = isMarried;
-        this.isStandardDeduction = isStandardDeduction;
+        this.married = married;
+        this.standardDeduction = standardDeduction;
+        this.incomeW2Default = incomeW2Default;
+        this.withholdingsW2Default = withholdingsW2Default;
+        this.income1099Default = income1099Default;
+        this.deductionsDefault = deductionsDefault;
+        this.marriedDefault = marriedDefault;
+        this.standardDeductionDefault = standardDeductionDefault;
         this.userId = userId;
     }
 
     public FinancialInformation(int financialInformationId, @Min(0) double incomeW2, @Min(0) double withholdingsW2,
-            @Min(0) double income1099, @Min(0) double deductions, boolean isMarried, boolean isStandardDeduction,
-            @NotNull int userId) {
+            @Min(0) double income1099, @Min(0) double deductions, boolean married, boolean standardDeduction,
+            boolean incomeW2Default, boolean withholdingsW2Default, boolean income1099Default,
+            boolean deductionsDefault, boolean marriedDefault, boolean standardDeductionDefault, @NotNull int userId) {
         this.financialInformationId = financialInformationId;
         this.incomeW2 = incomeW2;
         this.withholdingsW2 = withholdingsW2;
         this.income1099 = income1099;
         this.deductions = deductions;
-        this.isMarried = isMarried;
-        this.isStandardDeduction = isStandardDeduction;
+        this.married = married;
+        this.standardDeduction = standardDeduction;
+        this.incomeW2Default = incomeW2Default;
+        this.withholdingsW2Default = withholdingsW2Default;
+        this.income1099Default = income1099Default;
+        this.deductionsDefault = deductionsDefault;
+        this.marriedDefault = marriedDefault;
+        this.standardDeductionDefault = standardDeductionDefault;
         this.userId = userId;
     }
 
@@ -111,19 +144,67 @@ public class FinancialInformation {
     }
 
     public boolean isMarried() {
-        return isMarried;
+        return married;
     }
 
-    public void setMarried(boolean isMarried) {
-        this.isMarried = isMarried;
+    public void setMarried(boolean married) {
+        this.married = married;
     }
 
     public boolean isStandardDeduction() {
-        return isStandardDeduction;
+        return standardDeduction;
     }
 
-    public void setStandardDeduction(boolean isStandardDeduction) {
-        this.isStandardDeduction = isStandardDeduction;
+    public void setStandardDeduction(boolean standardDeduction) {
+        this.standardDeduction = standardDeduction;
+    }
+
+    public boolean isIncomeW2Default() {
+        return incomeW2Default;
+    }
+
+    public void setIncomeW2Default(boolean incomeW2Default) {
+        this.incomeW2Default = incomeW2Default;
+    }
+
+    public boolean isWithholdingsW2Default() {
+        return withholdingsW2Default;
+    }
+
+    public void setWithholdingsW2Default(boolean withholdingsW2Default) {
+        this.withholdingsW2Default = withholdingsW2Default;
+    }
+
+    public boolean isIncome1099Default() {
+        return income1099Default;
+    }
+
+    public void setIncome1099Default(boolean income1099Default) {
+        this.income1099Default = income1099Default;
+    }
+
+    public boolean isDeductionsDefault() {
+        return deductionsDefault;
+    }
+
+    public void setDeductionsDefault(boolean deductionsDefault) {
+        this.deductionsDefault = deductionsDefault;
+    }
+
+    public boolean isMarriedDefault() {
+        return marriedDefault;
+    }
+
+    public void setMarriedDefault(boolean marriedDefault) {
+        this.marriedDefault = marriedDefault;
+    }
+
+    public boolean isStandardDeductionDefault() {
+        return standardDeductionDefault;
+    }
+
+    public void setStandardDeductionDefault(boolean standardDeductionDefault) {
+        this.standardDeductionDefault = standardDeductionDefault;
     }
 
     public int getUserId() {
@@ -148,8 +229,14 @@ public class FinancialInformation {
         result = prime * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(deductions);
         result = prime * result + (int) (temp ^ (temp >>> 32));
-        result = prime * result + (isMarried ? 1231 : 1237);
-        result = prime * result + (isStandardDeduction ? 1231 : 1237);
+        result = prime * result + (married ? 1231 : 1237);
+        result = prime * result + (standardDeduction ? 1231 : 1237);
+        result = prime * result + (incomeW2Default ? 1231 : 1237);
+        result = prime * result + (withholdingsW2Default ? 1231 : 1237);
+        result = prime * result + (income1099Default ? 1231 : 1237);
+        result = prime * result + (deductionsDefault ? 1231 : 1237);
+        result = prime * result + (marriedDefault ? 1231 : 1237);
+        result = prime * result + (standardDeductionDefault ? 1231 : 1237);
         result = prime * result + userId;
         return result;
     }
@@ -173,9 +260,21 @@ public class FinancialInformation {
             return false;
         if (Double.doubleToLongBits(deductions) != Double.doubleToLongBits(other.deductions))
             return false;
-        if (isMarried != other.isMarried)
+        if (married != other.married)
             return false;
-        if (isStandardDeduction != other.isStandardDeduction)
+        if (standardDeduction != other.standardDeduction)
+            return false;
+        if (incomeW2Default != other.incomeW2Default)
+            return false;
+        if (withholdingsW2Default != other.withholdingsW2Default)
+            return false;
+        if (income1099Default != other.income1099Default)
+            return false;
+        if (deductionsDefault != other.deductionsDefault)
+            return false;
+        if (marriedDefault != other.marriedDefault)
+            return false;
+        if (standardDeductionDefault != other.standardDeductionDefault)
             return false;
         if (userId != other.userId)
             return false;
@@ -186,9 +285,10 @@ public class FinancialInformation {
     public String toString() {
         return "FinancialInformation [financialInformationId=" + financialInformationId + ", incomeW2=" + incomeW2
                 + ", withholdingsW2=" + withholdingsW2 + ", income1099=" + income1099 + ", deductions=" + deductions
-                + ", isMarried=" + isMarried + ", isStandardDeduction=" + isStandardDeduction + ", userId=" + userId
-                + "]";
+                + ", married=" + married + ", standardDeduction=" + standardDeduction + ", incomeW2Default="
+                + incomeW2Default + ", withholdingsW2Default=" + withholdingsW2Default + ", income1099Default="
+                + income1099Default + ", deductionsDefault=" + deductionsDefault + ", marriedDefault=" + marriedDefault
+                + ", standardDeductionDefault=" + standardDeductionDefault + ", userId=" + userId + "]";
     }
-
 
 }

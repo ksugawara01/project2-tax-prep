@@ -1,4 +1,4 @@
-import { Label, TextInput, TextInputMask, Form, Button, ButtonGroup, Fieldset, DateInputGroup, FormGroup, Select, DateInput, DatePicker, ErrorMessage } from '@trussworks/react-uswds';
+import { Label, TextInput, TextInputMask, Form, Button, ButtonGroup, FormGroup, DatePicker, ErrorMessage } from '@trussworks/react-uswds';
 import './PersonalInformationForm.css'
 import TrussStepIndicator from '../TrussStepIndicator/TrussStepIndicator';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +15,6 @@ import { useEffect, useState } from 'react';
 
     const navigate = useNavigate();
 
-
     // Select personal information from the store
     const personalInformation = useSelector((store : any) => store.personalInformation)
 
@@ -28,17 +27,54 @@ import { useEffect, useState } from 'react';
     const ssnRegex = /^\d{3} \d{2} \d{4}$/;
     const zipRegex = /^\d{5}$/;
 
-
     // Check if form data matches the regular expressions
     const hasBirthDateError = (!birthDateRegex.test(formData.birthDate)) && formData.birthDate !== '';
     const hasSsnError = (!ssnRegex.test(formData.ssn)) && formData.ssn !== '';
     const hasZipError = (!zipRegex.test(formData.zip)) && formData.zip !== '';
+
+    // temporary
+    const userId = 4;
+
+    // Get personal information from the database on mount, if no personal information exists for the current user then create it
+    useEffect(() => {
+        personalInformationService.getPersonalInformationByUserId(userId)
+        .then((response : any) => {
+            // personal information exists
+            if (response[1] === 200) {
+                // update the store and the form data with the returned personal information
+                dispatch(updatePersonalInformation(response[0]));
+                setFormData(response[0]);
+
+            // personal information does not exist
+            } else if (response[1] === 204) {
+                const newPersonalInformation = {
+                    firstName: '',
+                    lastName: '',
+                    streetAddress: '',
+                    city: '',
+                    stateName: '',
+                    zip: '',
+                    birthDate: '',
+                    ssn: '',
+                    userId: userId
+                }
+                // add new personal information to the database
+                personalInformationService.createPersonalInformation(newPersonalInformation)
+                .then((response : any) => {
+                    // update the store and the form data with the newly created personal information
+                    dispatch(updatePersonalInformation(response));
+                    setFormData(response);
+                })
+            }
+        })
+    },[])
 
     // Updates the form data when the user changes an input
     const handleFormChange = (event : any) => {
         const { name, value } = event.target
         const newValue = value
         setFormData((prevState : any) => ({ ...prevState, [name]: newValue }))
+        console.log('formData', formData);
     }
 
     const handleDateChange = (event : any) => {
@@ -74,11 +110,12 @@ import { useEffect, useState } from 'react';
 
     const handleContinue = (event : any) => {
         event.preventDefault();
-        // temporary
-        dispatch(updatePersonalInformation(formData))
-        console.log('continue', event);
-        console.log('formData', formData)
-        navigate('/financial-information');
+
+        personalInformationService.updatePersonalInformation(formData)
+        .then(() => {
+            dispatch(updatePersonalInformation(formData));
+            navigate('/financial-information');
+        })
     }
 
     return(
@@ -99,7 +136,7 @@ import { useEffect, useState } from 'react';
                 <TextInput id='personal-city' name='city' type='text' value={formData.city} onChange={handleFormChange}/>
 
                 <Label htmlFor='personal-state'>{t('personalInformationForm.state')}</Label>
-                <TextInput id='personal-state' name='state' type='text' value={formData.state} onChange={handleFormChange}/>
+                <TextInput id='personal-state' name='stateName' type='text' value={formData.stateName} onChange={handleFormChange}/>
 
                 <FormGroup error={hasZipError} >
                     <Label htmlFor='personal-zip'>{t('personalInformationForm.zip')}</Label>
@@ -126,6 +163,7 @@ import { useEffect, useState } from 'react';
                         aria-labelledby='personal-birth-date-label'
                         id='personal-birth-date'
                         name='birthDate'
+                        defaultValue='01/12/1990'
                         onChange={handleDateChange}
                     />
                 </FormGroup>

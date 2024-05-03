@@ -8,7 +8,7 @@ const personalInformationSlice = createSlice({
         lastName: '',
         streetAddress: '',
         city: '',
-        state: '',
+        stateName: '',
         zip: '',
         birthDate: '',
         ssn: '',
@@ -24,7 +24,7 @@ const personalInformationSlice = createSlice({
             state.lastName = personalInformation.lastName;
             state.streetAddress = personalInformation.streetAddress;
             state.city = personalInformation.city;
-            state.state = personalInformation.state;
+            state.stateName = personalInformation.stateName;
             state.zip = personalInformation.zip;
             state.birthDate = personalInformation.birthDate;
             state.ssn = personalInformation.ssn;

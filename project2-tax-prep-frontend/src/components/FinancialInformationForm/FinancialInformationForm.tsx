@@ -1,11 +1,12 @@
-import { Label, TextInput, Form, Button, Radio, StepIndicator, Fieldset, ButtonGroup} from '@trussworks/react-uswds';
-import { Link, useNavigate } from 'react-router-dom'
+import { Label, TextInput, Form, Button, Radio, Fieldset, ButtonGroup} from '@trussworks/react-uswds';
+import { useNavigate } from 'react-router-dom'
 import './FinancialInformationForm.css'
 import TrussStepIndicator from '../TrussStepIndicator/TrussStepIndicator';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { updateFinancialInformation } from '../../slices/financialInformationSlice';
+import financialInformationService from '../../services/financial-information';
 
 
  export default function FinancialInformationForm() {
@@ -21,27 +22,104 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
 
     const [formData, setFormData] = useState(financialInformation)
 
-    // Convert isMarried and isStandardDeduction from strings to boolean values
-    useEffect(() => {
-        if (formData.isMarried === "true") {
-            formData.isMarried = true;
-        } else if (formData.isMarried === "false") {
-            formData.isMarried = false;
-        }
+    // temporary
+    const userId = 4;
 
-        if (formData.isStandardDeduction === "true") {
-            formData.isStandardDeduction = true;
-        } else if (formData.isStandardDeduction === "false") {
-            formData.isStandardDeduction = false;
-        }
-        console.log('formData', formData)
-    }, [formData.isMarried, formData.isStandardDeduction])
+    // Get financial information from the database on mount, if no financial information exists for the current user then create it
+    useEffect(() => {
+        financialInformationService.getFinancialInformationByUserId(userId)
+        .then((response : any) => {
+            // financial information exists
+            if (response[1] === 200) {
+                // if defaults are true then make the corresponsing field an empty string
+                if (response[0].incomeW2Default) {
+                    response[0].incomeW2 = '';
+                }
+                if (response[0].withholdingsW2Default) {
+                    response[0].withholdingsW2 = '';
+                }
+                if (response[0].income1099Default) {
+                    response[0].income1099 = '';
+                }
+                if (response[0].deductionsDefault) {
+                    response[0].deductions = '';
+                }
+                if (response[0].marriedDefault) {
+                    response[0].married = '';
+                }
+                if (response[0].standardDeductionDefault) {
+                    response[0].standardDeduction = '';
+                }
+                console.log('edited response[0]', response[0])
+
+                // update the store and the form data with the returned financial information
+                dispatch(updateFinancialInformation(response[0]));
+                setFormData(response[0]);
+
+            // financial information does not exist
+            } else if (response[1] === 204) {
+                const newFinancialInformation = {
+                    incomeW2: '',
+                    withholdingsW2:'',
+                    income1099: '',
+                    deductions: '',
+                    married: false,
+                    standardDeduction: false,
+                    incomeW2Default: true,
+                    withholdingsW2Default: true,
+                    income1099Default: true,
+                    deductionsDefault: true,
+                    marriedDefault: true,
+                    standardDeductionDefault: true,
+                    userId: userId
+                }
+
+                // add new financial information to the database
+                financialInformationService.createFinancialInformation(newFinancialInformation)
+                .then((response : any) => {
+                    // if defaults are true then make the corresponsing field an empty string
+                    response.incomeW2 = '';
+                    response.withholdingsW2 = '';
+                    response.income1099 = '';
+                    response.deductions = '';
+                    response.married = '';
+                    response.standardDeduction = '';
+
+                    console.log('edited response', response)
+
+                    // update the store and the form data with the newly created financial information
+                    dispatch(updateFinancialInformation(response));
+                    setFormData(response);
+                })
+            }
+        })
+    },[])
 
     // Updates the form data when the user changes an input
     const handleFormChange = (event : any) => {
         const { name, value } = event.target
-        const newValue = value
-        setFormData((prevState : any) => ({ ...prevState, [name]: newValue }))
+        let newValue = value
+
+        // Convert the string booleans to actual boolean values
+        if (name === 'married') {
+            if (value === "true") {
+                newValue = true;
+            } else if (value === "false") {
+                newValue = false;
+            }
+
+        } else if (name === 'standardDeduction') {
+            if (value === "true") {
+                newValue = true;
+            } else if (value === "false") {
+                newValue = false;
+            }
+        }
+        
+        // Change the corresponding default boolean to false to indicate that the user has edited the information
+        const nameDefault = name + 'Default';
+        setFormData((prevState : any) => ({ ...prevState, [name]: newValue, [nameDefault]: false }));
+
     }
     
     const handleSubmit = (event : any) => {
@@ -50,16 +128,63 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
 
     const handleBack = (event : any) => {
         event.preventDefault();
-        // temporary
-        dispatch(updateFinancialInformation(formData))
-        navigate('/personal-information')
+
+        // if the user deletes a field then switch default back to true
+        if (formData.incomeW2 === '') {
+            formData.incomeW2Default = true;
+        }
+        if (formData.withholdingsW2 === '') {
+            formData.withholdingsW2Default = true;
+        }
+        if (formData.income1099 === '') {
+            formData.income1099Default = true;
+        }
+        if (formData.deductions === '') {
+            formData.deductionsDefault = true;
+        }
+        if (formData.married === '') {
+            formData.marriedDefault = true;
+        }
+        if (formData.standardDeduction === '') {
+            formData.standardDeductionDefault = true;
+        }
+
+        financialInformationService.updateFinancialInformation(formData)
+        .then(() => {
+            dispatch(updateFinancialInformation(formData));
+            navigate('/personal-information');
+        })
+        
     }
 
     const handleContinue = (event : any) => {
         event.preventDefault();
-        // temporary
-        dispatch(updateFinancialInformation(formData))
-        navigate('/review')
+
+        // if the user deletes a field then switch default back to true
+        if (formData.incomeW2 === '') {
+            formData.incomeW2Default = true;
+        }
+        if (formData.withholdingsW2 === '') {
+            formData.withholdingsW2Default = true;
+        }
+        if (formData.income1099 === '') {
+            formData.income1099Default = true;
+        }
+        if (formData.deductions === '') {
+            formData.deductionsDefault = true;
+        }
+        if (formData.married === '') {
+            formData.marriedDefault = true;
+        }
+        if (formData.standardDeduction === '') {
+            formData.standardDeductionDefault = true;
+        }
+
+        financialInformationService.updateFinancialInformation(formData)
+        .then(() => {
+            dispatch(updateFinancialInformation(formData));
+            navigate('/review');
+        })
     }
 
     return(
@@ -80,14 +205,14 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
 
                 <Fieldset id='financial-married-fieldset'>
                     <legend>{t('financialInformationForm.isMarried')}</legend>
-                    <Radio id='single-radio' name='isMarried' label={t('financialInformationForm.single')} value='false' defaultChecked={formData.isMarried===false} onChange={handleFormChange}/>
-                    <Radio id='married-radio' name='isMarried' label={t('financialInformationForm.married')} value='true' defaultChecked={formData.isMarried===true} onChange={handleFormChange}/>
+                    <Radio id='single-radio' name='married' label={t('financialInformationForm.single')} value='false' checked={formData.married===false} onChange={handleFormChange}/>
+                    <Radio id='married-radio' name='married' label={t('financialInformationForm.married')} value='true' checked={formData.married===true} onChange={handleFormChange}/>
                 </Fieldset>
 
                 <Fieldset id='financial-deduction-fieldset'>
                     <legend>{t('financialInformationForm.isStandardDeduction')}</legend>
-                    <Radio id='standard-radio' name='isStandardDeduction' label={t('financialInformationForm.standard')} value='true'  defaultChecked={formData.isStandardDeduction===true} onChange={handleFormChange}/>
-                    <Radio id='itemized-radio' name='isStandardDeduction' label={t('financialInformationForm.itemized')} value='false' defaultChecked={formData.isStandardDeduction===false} onChange={handleFormChange}/>
+                    <Radio id='standard-radio' name='standardDeduction' label={t('financialInformationForm.standard')} value='true'  checked={formData.standardDeduction===true} onChange={handleFormChange}/>
+                    <Radio id='itemized-radio' name='standardDeduction' label={t('financialInformationForm.itemized')} value='false' checked={formData.standardDeduction===false} onChange={handleFormChange}/>
                 </Fieldset>
                 
                 <ButtonGroup id='financial-button-group'>

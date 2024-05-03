@@ -1,11 +1,9 @@
 package com.skillstorm.project2taxprepbackend.services;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.skillstorm.project2taxprepbackend.models.FinancialInformation;
 import com.skillstorm.project2taxprepbackend.repositories.FinancialInformationRepository;
@@ -26,13 +24,9 @@ public class FinancialInformationService {
     public FinancialInformation getFinancialInformationByUserId(int userId) {
         FinancialInformation financialInformation = financialInformationRepository.findByUserId(userId);
 
-        return financialInformation;
-    }
-
-    @GetMapping
-    public List<FinancialInformation> getFinancialInformation() {
-        List<FinancialInformation> financialInformation = financialInformationRepository.findAll();
-        System.out.println("this is the service financial information: " + financialInformation);
+        if (financialInformation == null) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Resource not found with id: " + userId);
+        }
 
         return financialInformation;
     }

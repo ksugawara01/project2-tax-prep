@@ -11,7 +11,7 @@ const createFinancialInformation = (newFinancialInformation : any) => {
 // Get financial information by user id
 const getFinancialInformationByUserId = (userId : any) => {
     const request = axios.get(`${baseUrl}/user-id/${userId}`)
-    return request.then(response => response.data)
+    return request.then(response => [response.data, response.status])
 }
 
 // Update financial information
