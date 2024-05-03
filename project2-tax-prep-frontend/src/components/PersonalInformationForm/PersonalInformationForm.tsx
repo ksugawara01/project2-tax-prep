@@ -83,29 +83,6 @@ import { useEffect, useState } from 'react';
 
     const handleSubmit = (event : any) => {
         event.preventDefault();
-
-        console.log('submit', event)
-
-        /*
-
-        // Send a post request if there is no existing personal information
-        if (formData.personalInformationId == null) {
-            formData.userId = //get userId of currently logged in user
-            // Send post request to the backend to create the personal information the database
-            personalInformationService.createPersonalInformation(formData)
-            .then((newPersonalInformation) => {
-                // update store
-                dispatch(updatePersonalInformation(newPersonalInformation))
-            })
-            .catch((e) => {
-                console.log('e', e)
-            })
-            // Send a put request if there is existing personal information
-        } else {
-
-        }
-        
-        */
     }
 
     const handleContinue = (event : any) => {

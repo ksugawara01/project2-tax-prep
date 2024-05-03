@@ -18,7 +18,8 @@ i18n
                     continue: 'Continue',
                     back: 'Back',
                     startReturn: 'Start 2023 Return',
-                    edit: 'Edit'
+                    edit: 'Edit',
+                    createAccount: 'Create Account'
                 },
                 landingPage: {
                     freeReturns: 'Free Federal Return for Everyone',
@@ -66,6 +67,15 @@ i18n
                     withholdings: 'Total Withholdings:',
                     federalRefund: 'Your Federal Refund:'
                 },
+                createAccountForm: {
+                    newAccountSetup: 'New Account Setup',
+                    username: 'Username',
+                    email: 'Email Address',
+                    password: 'Create Password',
+                    confirmPassword: 'Re-type Password',
+                    alreadyHaveAccount: 'Already have an account? ',
+                    signIn: 'Sign in'
+                },
                 header: {
                     languages: 'Languages'
                 },
@@ -80,7 +90,8 @@ i18n
                     continue: 'Continuar',
                     back: 'Atrás',
                     startReturn: 'Inicio 2023 Regreso',
-                    edit: 'Editar'
+                    edit: 'Editar',
+                    createAccount: 'Crear Una Cuenta'
                 },
                 landingPage: {
                     freeReturns: 'Devolución federal gratuita para todas',
@@ -128,6 +139,15 @@ i18n
                     withholdings: 'Retenciones Totales:',
                     federalRefund: 'Su Reembolso Federal:'
                 },
+                createAccountForm: {
+                    newAccountSetup: 'Configuración de nueva cuenta',
+                    username: 'Nombre de Usuario',
+                    email: 'Dirección de Correo Electrónico',
+                    password: 'Crear Contraseña',
+                    confirmPassword: 'Confirmar Contraseña',
+                    alreadyHaveAccount: '¿Ya tienes una cuenta? ',
+                    signIn: 'Iniciar Sesión'
+                },
                 header: {
                     languages: 'Idiomas'
                 },
@@ -142,7 +162,8 @@ i18n
                     continue: '続く',
                     back: '戻る',
                     startReturn: '2023 年スタート リターン',
-                    edit: '編集'
+                    edit: '編集',
+                    createAccount: 'アカウントを作成する'
                 },
                 landingPage: {
                     freeReturns: '誰でも無料の連邦返品',
@@ -189,6 +210,15 @@ i18n
                     taxesOwed: '未払いの税金の合計:',
                     withholdings: '源泉徴収総額:',
                     federalRefund: '連邦政府による払い戻し:'
+                },
+                createAccountForm: {
+                    newAccountSetup: '新しいアカウントのセットアップ',
+                    username: 'ユーザー名',
+                    email: '電子メールアドレス',
+                    password: 'パスワードを作成する',
+                    confirmPassword: 'パスワードを認証する',
+                    alreadyHaveAccount: 'すでにアカウントをお持ちですか？ ',
+                    signIn: 'サインイン'
                 },
                 header: {
                     languages: '言語'

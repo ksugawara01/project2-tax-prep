@@ -4,6 +4,7 @@ import './TrussHeader.css'
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCurrentLanguage } from '../../slices/currentLanguageSlice';
+import { Link } from 'react-router-dom';
 
 export default function TrussHeader() {
 
@@ -23,13 +24,13 @@ export default function TrussHeader() {
       }, [currentLanguage]);
 
     const testItemsMenu = [
-      <a href='#two' key='two' className='usa-nav__link'>
-          <span>Parent link</span>
-      </a>,
-      <a href='#three' key='three' className='usa-nav__link'>
-          <span>Parent link</span>
-      </a>,
-      <LanguageSelector
+      <Link to='/' id='test' className='usa-nav__link'>
+          <span>Home</span>
+      </Link>,
+      <Link to='/create-account' className='usa-nav__link'>
+          <span>Sign Up</span>
+      </Link>,
+      <LanguageSelector id='language-selector'
           label={t('header.languages')}
           langs={[
               {
@@ -57,9 +58,9 @@ export default function TrussHeader() {
         <Header id='truss-header' basic={true} showMobileOverlay={expanded}>
             <div className='usa-nav-container'>
                 <div className='usa-navbar'>
-                    <Title>Fake Tax Company</Title>
+                    <Link id='header-company-name' to='/'>Fake Tax Company</Link>
                 </div>
-                <PrimaryNav items={testItemsMenu} mobileExpanded={expanded} onToggleMobileNav={onClick}></PrimaryNav>
+                <PrimaryNav id='primary-nav' items={testItemsMenu} mobileExpanded={expanded} onToggleMobileNav={onClick}></PrimaryNav>
             </div>
         </Header>
     )
