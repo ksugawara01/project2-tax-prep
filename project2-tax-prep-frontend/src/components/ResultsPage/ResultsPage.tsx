@@ -7,7 +7,10 @@ import TrussStepIndicator from "../TrussStepIndicator/TrussStepIndicator"
 import { useTranslation } from 'react-i18next'
 
 import taxCalculatorService from '../../services/tax-calculator'
-import { useSelector } from 'react-redux'
+import financialInformationService from '../../services/financial-information'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateFinancialInformation } from '../../slices/financialInformationSlice'
+
 
 export default function ResultsPage() {
 
@@ -16,7 +19,19 @@ export default function ResultsPage() {
     const [taxableIncome, setTaxableIncome] = useState(0);
 
     // Select personal information from the store
-    const financialInformation = useSelector((store : any) => store.financialInformation)
+    const financialInformation = useSelector((store : any) => store.financialInformation);
+
+    const dispatch = useDispatch();
+
+    // temporary
+    const userId = 4;
+
+    useEffect(() => {
+        financialInformationService.getFinancialInformationByUserId(userId)
+            .then((financialInformation) => {
+                dispatch(updateFinancialInformation(financialInformation[0]))
+            })
+    },[])
 
     const [isConfettiActive, setIsConfettiActive] = useState(false)
 
@@ -53,11 +68,9 @@ export default function ResultsPage() {
                 setReturnAmount(returnAmount);
             })
         }
-
     }
 
     useEffect(() => {
-        console.log('financial information', financialInformation)
 
         // Standard deduction calculation
         if (financialInformation.standardDeduction) {
@@ -78,7 +91,7 @@ export default function ResultsPage() {
             calculateReturn(taxable);
         }
 
-    }, [])
+    }, [financialInformation])
 
     // Confetti Settings
     const config = {

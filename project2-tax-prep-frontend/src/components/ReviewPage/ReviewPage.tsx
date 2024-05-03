@@ -3,8 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import './ReviewPage.css'
 import TrussStepIndicator from '../TrussStepIndicator/TrussStepIndicator';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import personalInformationService from '../../services/personal-information';
+import financialInformationService from '../../services/financial-information';
+import { updatePersonalInformation } from '../../slices/personalInformationSlice';
+import { updateFinancialInformation } from '../../slices/financialInformationSlice';
 
  export default function ReviewPage() {
 
@@ -12,6 +16,24 @@ import { useSelector } from 'react-redux';
     const personalInformation = useSelector((store : any) => store.personalInformation)
 
     const financialInformation = useSelector((store : any) => store.financialInformation)
+
+    const dispatch = useDispatch();
+
+    //temporary
+    const userId = 4;
+
+    useEffect(() => {
+        personalInformationService.getPersonalInformationByUserId(userId)
+            .then((personalInformation : any) => {
+                dispatch(updatePersonalInformation(personalInformation[0]));
+            })
+        
+        financialInformationService.getFinancialInformationByUserId(userId)
+            .then((financialInformation) => {
+                dispatch(updateFinancialInformation(financialInformation[0]))
+            })
+    },[])
+
 
     const containsFirstName = (personalInformation.firstName !== '' ? true : false)
     const containsLastName = (personalInformation.lastName !== '' ? true : false)
