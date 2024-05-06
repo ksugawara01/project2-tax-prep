@@ -19,7 +19,8 @@ i18n
                     back: 'Back',
                     startReturn: 'Start 2023 Return',
                     edit: 'Edit',
-                    createAccount: 'Create Account'
+                    createAccount: 'Create Account',
+                    signIn: 'Sign In'
                 },
                 landingPage: {
                     freeReturns: 'Free Federal Return for Everyone',
@@ -45,20 +46,25 @@ i18n
                     incomeW2: 'W2 Income',
                     withholdingsW2: 'W2 Withholdings',
                     income1099: '1099 Income',
-                    deductions: '1099 Deductions',
+                    deductions: 'Deductions',
                     isMarried: 'Are you single or married?',
                     single: 'Single',
                     married: 'Married',
                     isStandardDeduction: 'Standard or Itemized Deduction?',
                     standard: 'Standard',
-                    itemized: 'Itemized'
+                    itemized: 'Itemized',
+                    dependents: 'Number of Dependents',
+                    aotc: 'Do you qualify for the American Oppurtunity Tax Credit?',
+                    cleanEnergy: 'Do you qualify for the Energy Home Improvement Credit?',
+                    yes: 'Yes',
+                    no: 'No'
                 },
                 review: {
                     reviewInformation: 'Review your information',
                     personalInformation: 'Personal Information',
                     financialInformation: 'Financial Information',
                     maritalStatus: 'Marital Status',
-                    deductionType: 'Deduction Type'
+                    deductionType: 'Deduction Type',
                 },
                 results: {
                     congratulations: 'Congratulations on filing your federal tax return!',
@@ -76,6 +82,13 @@ i18n
                     alreadyHaveAccount: 'Already have an account? ',
                     signIn: 'Sign in'
                 },
+                signInForm: {
+                    signIn: 'Sign In',
+                    noAccount: 'Don\'t have an account? ',
+                    username: 'Username',
+                    password: 'Password',
+                    createAccount: 'Create Account'
+                },
                 header: {
                     languages: 'Languages'
                 },
@@ -91,7 +104,8 @@ i18n
                     back: 'Atrás',
                     startReturn: 'Inicio 2023 Regreso',
                     edit: 'Editar',
-                    createAccount: 'Crear Una Cuenta'
+                    createAccount: 'Crear Una Cuenta',
+                    signIn: 'Iniciar Sesión'
                 },
                 landingPage: {
                     freeReturns: 'Devolución federal gratuita para todas',
@@ -117,13 +131,18 @@ i18n
                     incomeW2: 'Ingresos W2',
                     withholdingsW2: 'Retenciones W2',
                     income1099: '1099 Ingresos',
-                    deductions: '1099 Deducciones',
+                    deductions: 'Deducciones',
                     isMarried: '¿Eres soltero o casado?',
                     single: 'Soltera',
                     married: 'Casada',
                     isStandardDeduction: '¿Deducción estándar o detallada?',
                     standard: 'Estándar',
-                    itemized: 'Detallada'
+                    itemized: 'Detallada',
+                    dependents: '',
+                    aotc: '',
+                    cleanEnergy: '',
+                    yes: '',
+                    no: ''
                 },
                 review: {
                     reviewInformation: 'Revisa tu información',
@@ -148,6 +167,13 @@ i18n
                     alreadyHaveAccount: '¿Ya tienes una cuenta? ',
                     signIn: 'Iniciar Sesión'
                 },
+                signInForm: {
+                    signIn: 'Iniciar Sesión',
+                    noAccount: '¿No tienes una cuenta? ',
+                    username: 'Nombre de Usuario',
+                    password: 'Contraseña',
+                    createAccount: 'Crear una Cuenta'
+                },
                 header: {
                     languages: 'Idiomas'
                 },
@@ -163,7 +189,8 @@ i18n
                     back: '戻る',
                     startReturn: '2023 年スタート リターン',
                     edit: '編集',
-                    createAccount: 'アカウントを作成する'
+                    createAccount: 'アカウントを作成する',
+                    signIn: 'サインイン'
                 },
                 landingPage: {
                     freeReturns: '誰でも無料の連邦返品',
@@ -189,13 +216,18 @@ i18n
                     incomeW2: 'W2収入',
                     withholdingsW2: 'W2 源泉徴収',
                     income1099: '1099 収入',
-                    deductions: '1099 控除',
+                    deductions: '控除',
                     isMarried: '独身ですか、それとも結婚​​していますか？',
                     single: '独身',
                     married: '結婚している',
                     isStandardDeduction: '標準控除または項目別控除?',
                     standard: '標準',
-                    itemized: '項目別'
+                    itemized: '項目別',
+                    dependents: '',
+                    aotc: '',
+                    cleanEnergy: '',
+                    yes: '',
+                    no: ''
                 },
                 review: {
                     reviewInformation: '情報を確認する',
@@ -219,6 +251,13 @@ i18n
                     confirmPassword: 'パスワードを認証する',
                     alreadyHaveAccount: 'すでにアカウントをお持ちですか？ ',
                     signIn: 'サインイン'
+                },
+                signInForm: {
+                    signIn: 'サインイン',
+                    noAccount: 'アカウントをお持ちでない場合は ',
+                    username: 'ユーザー名',
+                    password: 'パスワード',
+                    createAccount: 'アカウントを作成する'
                 },
                 header: {
                     languages: '言語'

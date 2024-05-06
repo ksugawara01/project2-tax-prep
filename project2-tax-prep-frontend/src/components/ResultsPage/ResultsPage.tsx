@@ -14,18 +14,22 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
 
 export default function ResultsPage() {
 
-    const [taxesOwed, setTaxesOwed] = useState(1);
-    const [returnAmount, setReturnAmount] = useState(0);
-    const [taxableIncome, setTaxableIncome] = useState(0);
-
     // Select personal information from the store
     const financialInformation = useSelector((store : any) => store.financialInformation);
+
+    const [taxesOwed, setTaxesOwed] = useState(1);
+    const [credits, setCredits] = useState(
+        (Number(financialInformation.dependents)*3) + (financialInformation.aotc ? 2500 : 0) + (financialInformation.cleanEnergy ? 1200 : 0)
+    );
+    const [returnAmount, setReturnAmount] = useState(0);
+    const [taxableIncome, setTaxableIncome] = useState(0);
 
     const dispatch = useDispatch();
 
     // temporary
     const userId = 4;
 
+    
     useEffect(() => {
         financialInformationService.getFinancialInformationByUserId(userId)
             .then((financialInformation) => {
@@ -44,27 +48,37 @@ export default function ResultsPage() {
             taxCalculatorService.getMarriedFilerTax(taxableIncome)
             .then((taxesOwed) => {
 
-                const returnAmount = financialInformation.withholdingsW2 - taxesOwed;
+                const totalTaxesOwed = taxesOwed - credits;
+
+                console.log('credits', credits);
+                console.log('total taxes owed', totalTaxesOwed);
+
+                const returnAmount = financialInformation.withholdingsW2 - totalTaxesOwed;
 
                 if (returnAmount >= 0) {
                     // Start confetti animation
                     setIsConfettiActive(true)
                 }
 
-                setTaxesOwed(taxesOwed)
+                setTaxesOwed(totalTaxesOwed);
                 setReturnAmount(returnAmount);
             })
         } else {
             taxCalculatorService.getSingleFilerTax(taxableIncome)
             .then((taxesOwed) => {
 
-                const returnAmount = financialInformation.withholdingsW2 - taxesOwed;
+                const totalTaxesOwed = taxesOwed - credits;
+
+                console.log('credits', credits);
+                console.log('total taxes owed', totalTaxesOwed);
+
+                const returnAmount = financialInformation.withholdingsW2 - totalTaxesOwed;
                 if (returnAmount >= 0) {
                     // Start confetti animation
                     setIsConfettiActive(true)
                 } 
 
-                setTaxesOwed(taxesOwed)
+                setTaxesOwed(totalTaxesOwed);
                 setReturnAmount(returnAmount);
             })
         }
@@ -74,7 +88,11 @@ export default function ResultsPage() {
 
         // Standard deduction calculation
         if (financialInformation.standardDeduction) {
-            const deductions = 13850; // the standard deduction for 2023 taxes is $13850
+            let deductions = 13850; // the standard deduction for 2023 taxes is $13850 for single filers
+            if (financialInformation.married) {
+                deductions = 27700; // the standard deduction is 27700 for married couples filing jointly
+            }
+            
             let taxable = totalIncome - deductions;
             if (taxable < 0) {taxable = 0}
 
@@ -91,6 +109,27 @@ export default function ResultsPage() {
             calculateReturn(taxable);
         }
 
+    }, [financialInformation, credits])
+
+    useEffect(() => {
+        // Credits Calculation
+        let totalCredits = 0;
+        if (financialInformation.aotc) {
+            totalCredits += 2500;
+        }
+        console.log('credits1', totalCredits)
+        if (financialInformation.cleanEnergy) {
+            totalCredits += 1200;
+        }
+        console.log('credits2', totalCredits)
+        console.log('dependents', financialInformation.dependents)
+        totalCredits += Number(financialInformation.dependents)*2000;
+
+        console.log('credits3', totalCredits)
+
+        console.log('state credits', credits)
+
+        setCredits(totalCredits);
     }, [financialInformation])
 
     // Confetti Settings

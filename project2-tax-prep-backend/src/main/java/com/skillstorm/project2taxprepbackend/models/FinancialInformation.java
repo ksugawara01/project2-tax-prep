@@ -33,8 +33,18 @@ public class FinancialInformation {
     @Column(name = "deductions")
     private double deductions;
 
+    @Min(0)
+    @Column(name = "dependents")
+    private int dependents;
+
     @Column(name = "is_married")
     private boolean married;
+
+    @Column(name = "has_aotc")
+    private boolean aotc;
+
+    @Column(name = "has_clean_energy")
+    private boolean cleanEnergy;
 
     @Column(name = "is_standard_deduction")
     private boolean standardDeduction;
@@ -51,11 +61,20 @@ public class FinancialInformation {
     @Column(name = "deductions_default")
     private boolean deductionsDefault;
 
+    @Column(name = "dependents_default")
+    private boolean dependentsDefault;
+
     @Column(name = "is_married_default")
     private boolean marriedDefault;
 
     @Column(name = "is_standard_deduction_default")
     private boolean standardDeductionDefault;
+
+    @Column(name = "has_aotc_default")
+    private boolean aotcDefault;
+
+    @Column(name = "has_clean_energy_default")
+    private boolean cleanEnergyDefault;
 
     @Column(name="user_id", unique = true)
     @NotNull
@@ -65,41 +84,55 @@ public class FinancialInformation {
     }
 
     public FinancialInformation(@Min(0) double incomeW2, @Min(0) double withholdingsW2, @Min(0) double income1099,
-            @Min(0) double deductions, boolean married, boolean standardDeduction, boolean incomeW2Default,
-            boolean withholdingsW2Default, boolean income1099Default, boolean deductionsDefault, boolean marriedDefault,
-            boolean standardDeductionDefault, @NotNull int userId) {
+            @Min(0) double deductions, @Min(0) int dependents, boolean married, boolean aotc, boolean cleanEnergy,
+            boolean standardDeduction, boolean incomeW2Default, boolean withholdingsW2Default,
+            boolean income1099Default, boolean deductionsDefault, boolean dependentsDefault, boolean marriedDefault,
+            boolean standardDeductionDefault, boolean aotcDefault, boolean cleanEnergyDefault, @NotNull int userId) {
         this.incomeW2 = incomeW2;
         this.withholdingsW2 = withholdingsW2;
         this.income1099 = income1099;
         this.deductions = deductions;
+        this.dependents = dependents;
         this.married = married;
+        this.aotc = aotc;
+        this.cleanEnergy = cleanEnergy;
         this.standardDeduction = standardDeduction;
         this.incomeW2Default = incomeW2Default;
         this.withholdingsW2Default = withholdingsW2Default;
         this.income1099Default = income1099Default;
         this.deductionsDefault = deductionsDefault;
+        this.dependentsDefault = dependentsDefault;
         this.marriedDefault = marriedDefault;
         this.standardDeductionDefault = standardDeductionDefault;
+        this.aotcDefault = aotcDefault;
+        this.cleanEnergyDefault = cleanEnergyDefault;
         this.userId = userId;
     }
 
     public FinancialInformation(int financialInformationId, @Min(0) double incomeW2, @Min(0) double withholdingsW2,
-            @Min(0) double income1099, @Min(0) double deductions, boolean married, boolean standardDeduction,
-            boolean incomeW2Default, boolean withholdingsW2Default, boolean income1099Default,
-            boolean deductionsDefault, boolean marriedDefault, boolean standardDeductionDefault, @NotNull int userId) {
+            @Min(0) double income1099, @Min(0) double deductions, @Min(0) int dependents, boolean married, boolean aotc,
+            boolean cleanEnergy, boolean standardDeduction, boolean incomeW2Default, boolean withholdingsW2Default,
+            boolean income1099Default, boolean deductionsDefault, boolean dependentsDefault, boolean marriedDefault,
+            boolean standardDeductionDefault, boolean aotcDefault, boolean cleanEnergyDefault, @NotNull int userId) {
         this.financialInformationId = financialInformationId;
         this.incomeW2 = incomeW2;
         this.withholdingsW2 = withholdingsW2;
         this.income1099 = income1099;
         this.deductions = deductions;
+        this.dependents = dependents;
         this.married = married;
+        this.aotc = aotc;
+        this.cleanEnergy = cleanEnergy;
         this.standardDeduction = standardDeduction;
         this.incomeW2Default = incomeW2Default;
         this.withholdingsW2Default = withholdingsW2Default;
         this.income1099Default = income1099Default;
         this.deductionsDefault = deductionsDefault;
+        this.dependentsDefault = dependentsDefault;
         this.marriedDefault = marriedDefault;
         this.standardDeductionDefault = standardDeductionDefault;
+        this.aotcDefault = aotcDefault;
+        this.cleanEnergyDefault = cleanEnergyDefault;
         this.userId = userId;
     }
 
@@ -143,12 +176,36 @@ public class FinancialInformation {
         this.deductions = deductions;
     }
 
+    public int getDependents() {
+        return dependents;
+    }
+
+    public void setDependents(int dependents) {
+        this.dependents = dependents;
+    }
+
     public boolean isMarried() {
         return married;
     }
 
     public void setMarried(boolean married) {
         this.married = married;
+    }
+
+    public boolean isAotc() {
+        return aotc;
+    }
+
+    public void setAotc(boolean aotc) {
+        this.aotc = aotc;
+    }
+
+    public boolean isCleanEnergy() {
+        return cleanEnergy;
+    }
+
+    public void setCleanEnergy(boolean cleanEnergy) {
+        this.cleanEnergy = cleanEnergy;
     }
 
     public boolean isStandardDeduction() {
@@ -191,6 +248,14 @@ public class FinancialInformation {
         this.deductionsDefault = deductionsDefault;
     }
 
+    public boolean isDependentsDefault() {
+        return dependentsDefault;
+    }
+
+    public void setDependentsDefault(boolean dependentsDefault) {
+        this.dependentsDefault = dependentsDefault;
+    }
+
     public boolean isMarriedDefault() {
         return marriedDefault;
     }
@@ -205,6 +270,22 @@ public class FinancialInformation {
 
     public void setStandardDeductionDefault(boolean standardDeductionDefault) {
         this.standardDeductionDefault = standardDeductionDefault;
+    }
+
+    public boolean isAotcDefault() {
+        return aotcDefault;
+    }
+
+    public void setAotcDefault(boolean aotcDefault) {
+        this.aotcDefault = aotcDefault;
+    }
+
+    public boolean isCleanEnergyDefault() {
+        return cleanEnergyDefault;
+    }
+
+    public void setCleanEnergyDefault(boolean cleanEnergyDefault) {
+        this.cleanEnergyDefault = cleanEnergyDefault;
     }
 
     public int getUserId() {
@@ -229,14 +310,20 @@ public class FinancialInformation {
         result = prime * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(deductions);
         result = prime * result + (int) (temp ^ (temp >>> 32));
+        result = prime * result + dependents;
         result = prime * result + (married ? 1231 : 1237);
+        result = prime * result + (aotc ? 1231 : 1237);
+        result = prime * result + (cleanEnergy ? 1231 : 1237);
         result = prime * result + (standardDeduction ? 1231 : 1237);
         result = prime * result + (incomeW2Default ? 1231 : 1237);
         result = prime * result + (withholdingsW2Default ? 1231 : 1237);
         result = prime * result + (income1099Default ? 1231 : 1237);
         result = prime * result + (deductionsDefault ? 1231 : 1237);
+        result = prime * result + (dependentsDefault ? 1231 : 1237);
         result = prime * result + (marriedDefault ? 1231 : 1237);
         result = prime * result + (standardDeductionDefault ? 1231 : 1237);
+        result = prime * result + (aotcDefault ? 1231 : 1237);
+        result = prime * result + (cleanEnergyDefault ? 1231 : 1237);
         result = prime * result + userId;
         return result;
     }
@@ -260,7 +347,13 @@ public class FinancialInformation {
             return false;
         if (Double.doubleToLongBits(deductions) != Double.doubleToLongBits(other.deductions))
             return false;
+        if (dependents != other.dependents)
+            return false;
         if (married != other.married)
+            return false;
+        if (aotc != other.aotc)
+            return false;
+        if (cleanEnergy != other.cleanEnergy)
             return false;
         if (standardDeduction != other.standardDeduction)
             return false;
@@ -272,9 +365,15 @@ public class FinancialInformation {
             return false;
         if (deductionsDefault != other.deductionsDefault)
             return false;
+        if (dependentsDefault != other.dependentsDefault)
+            return false;
         if (marriedDefault != other.marriedDefault)
             return false;
         if (standardDeductionDefault != other.standardDeductionDefault)
+            return false;
+        if (aotcDefault != other.aotcDefault)
+            return false;
+        if (cleanEnergyDefault != other.cleanEnergyDefault)
             return false;
         if (userId != other.userId)
             return false;
@@ -285,10 +384,13 @@ public class FinancialInformation {
     public String toString() {
         return "FinancialInformation [financialInformationId=" + financialInformationId + ", incomeW2=" + incomeW2
                 + ", withholdingsW2=" + withholdingsW2 + ", income1099=" + income1099 + ", deductions=" + deductions
-                + ", married=" + married + ", standardDeduction=" + standardDeduction + ", incomeW2Default="
-                + incomeW2Default + ", withholdingsW2Default=" + withholdingsW2Default + ", income1099Default="
-                + income1099Default + ", deductionsDefault=" + deductionsDefault + ", marriedDefault=" + marriedDefault
-                + ", standardDeductionDefault=" + standardDeductionDefault + ", userId=" + userId + "]";
+                + ", dependents=" + dependents + ", married=" + married + ", aotc=" + aotc + ", cleanEnergy="
+                + cleanEnergy + ", standardDeduction=" + standardDeduction + ", incomeW2Default=" + incomeW2Default
+                + ", withholdingsW2Default=" + withholdingsW2Default + ", income1099Default=" + income1099Default
+                + ", deductionsDefault=" + deductionsDefault + ", dependentsDefault=" + dependentsDefault
+                + ", marriedDefault=" + marriedDefault + ", standardDeductionDefault=" + standardDeductionDefault
+                + ", aotcDefault=" + aotcDefault + ", cleanEnergyDefault=" + cleanEnergyDefault + ", userId=" + userId
+                + "]";
     }
 
 }

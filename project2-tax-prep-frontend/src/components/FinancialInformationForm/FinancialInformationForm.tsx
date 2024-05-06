@@ -1,4 +1,4 @@
-import { Label, TextInput, Form, Button, Radio, Fieldset, ButtonGroup} from '@trussworks/react-uswds';
+import { Label, TextInput, Form, Button, Radio, Fieldset, ButtonGroup } from '@trussworks/react-uswds';
 import { useNavigate } from 'react-router-dom'
 import './FinancialInformationForm.css'
 import TrussStepIndicator from '../TrussStepIndicator/TrussStepIndicator';
@@ -50,6 +50,15 @@ import financialInformationService from '../../services/financial-information';
                 if (response[0].standardDeductionDefault) {
                     response[0].standardDeduction = '';
                 }
+                if (response[0].dependentsDefault) {
+                    response[0].dependents = '';
+                }
+                if (response[0].aotcDefault) {
+                    response[0].aotc = '';
+                }
+                if (response[0].cleanEnergyDefault) {
+                    response[0].cleanEnergy = '';
+                }
                 console.log('edited response[0]', response[0])
 
                 // update the store and the form data with the returned financial information
@@ -63,14 +72,20 @@ import financialInformationService from '../../services/financial-information';
                     withholdingsW2:'',
                     income1099: '',
                     deductions: '',
+                    dependents: '',
                     married: false,
                     standardDeduction: false,
+                    aotc: false,
+                    cleanEnergy: false,
                     incomeW2Default: true,
                     withholdingsW2Default: true,
                     income1099Default: true,
                     deductionsDefault: true,
                     marriedDefault: true,
                     standardDeductionDefault: true,
+                    dependentsDefault: true,
+                    aotcDefault: true,
+                    cleanEnergyDefault: true,
                     userId: userId
                 }
 
@@ -84,6 +99,9 @@ import financialInformationService from '../../services/financial-information';
                     response.deductions = '';
                     response.married = '';
                     response.standardDeduction = '';
+                    response.dependents = '';
+                    response.aotc = '';
+                    response.cleanEnergy = '';
 
                     console.log('edited response', response)
 
@@ -109,6 +127,19 @@ import financialInformationService from '../../services/financial-information';
             }
 
         } else if (name === 'standardDeduction') {
+            if (value === "true") {
+                newValue = true;
+            } else if (value === "false") {
+                newValue = false;
+            }
+        } else if (name === 'aotc') {
+            if (value === "true") {
+                newValue = true;
+            } else if (value === "false") {
+                newValue = false;
+            }
+        }
+        else if (name === 'cleanEnergy') {
             if (value === "true") {
                 newValue = true;
             } else if (value === "false") {
@@ -148,6 +179,15 @@ import financialInformationService from '../../services/financial-information';
         if (formData.standardDeduction === '') {
             formData.standardDeductionDefault = true;
         }
+        if (formData.dependents === '') {
+            formData.dependentsDefault = true;
+        }
+        if (formData.aotc === '') {
+            formData.aotcDefault = true;
+        }
+        if (formData.cleanEnergy === '') {
+            formData.cleanEnergyDefault = true;
+        }
 
         financialInformationService.updateFinancialInformation(formData)
         .then(() => {
@@ -179,6 +219,15 @@ import financialInformationService from '../../services/financial-information';
         if (formData.standardDeduction === '') {
             formData.standardDeductionDefault = true;
         }
+        if (formData.dependents === '') {
+            formData.dependentsDefault = true;
+        }
+        if (formData.aotc === '') {
+            formData.aotcDefault = true;
+        }
+        if (formData.cleanEnergy === '') {
+            formData.cleanEnergyDefault = true;
+        }
 
         financialInformationService.updateFinancialInformation(formData)
         .then(() => {
@@ -203,16 +252,31 @@ import financialInformationService from '../../services/financial-information';
                 <Label htmlFor='deductions'>{t('financialInformationForm.deductions')}</Label>
                 <TextInput id='financial-1099-deduction' name='deductions' type='number' value={formData.deductions} onChange={handleFormChange}/>
 
-                <Fieldset id='financial-married-fieldset'>
+                <Label htmlFor='dependents'>{t('financialInformationForm.dependents')}</Label>
+                <TextInput id='financial-credits-dependents' name='dependents' type='number' value={formData.dependents} onChange={handleFormChange}/>
+
+                <Fieldset id='financial-married-fieldset' className='radio-fieldset'>
                     <legend>{t('financialInformationForm.isMarried')}</legend>
                     <Radio id='single-radio' name='married' label={t('financialInformationForm.single')} value='false' checked={formData.married===false} onChange={handleFormChange}/>
                     <Radio id='married-radio' name='married' label={t('financialInformationForm.married')} value='true' checked={formData.married===true} onChange={handleFormChange}/>
                 </Fieldset>
 
-                <Fieldset id='financial-deduction-fieldset'>
+                <Fieldset id='financial-deduction-fieldset' className='radio-fieldset'>
                     <legend>{t('financialInformationForm.isStandardDeduction')}</legend>
                     <Radio id='standard-radio' name='standardDeduction' label={t('financialInformationForm.standard')} value='true'  checked={formData.standardDeduction===true} onChange={handleFormChange}/>
                     <Radio id='itemized-radio' name='standardDeduction' label={t('financialInformationForm.itemized')} value='false' checked={formData.standardDeduction===false} onChange={handleFormChange}/>
+                </Fieldset>
+
+                <Fieldset id='financial-aotc-fieldset' className='radio-fieldset'>
+                    <legend>{t('financialInformationForm.aotc')}</legend>
+                    <Radio id='aotc-yes-radio' name='aotc' label={t('financialInformationForm.yes')} value='true' checked={formData.aotc===true} onChange={handleFormChange}/>
+                    <Radio id='aotc-no-radiox' name='aotc' label={t('financialInformationForm.no')} value='false' checked={formData.aotc===false} onChange={handleFormChange}/>
+                </Fieldset>
+
+                <Fieldset id='financial-clean-fieldset' className='radio-fieldset'>
+                    <legend>{t('financialInformationForm.cleanEnergy')}</legend>
+                    <Radio id='clean-yes-radio' name='cleanEnergy' label={t('financialInformationForm.yes')} value='true'  checked={formData.cleanEnergy===true} onChange={handleFormChange}/>
+                    <Radio id='clean-no-radio' name='cleanEnergy' label={t('financialInformationForm.no')} value='false' checked={formData.cleanEnergy===false} onChange={handleFormChange}/>
                 </Fieldset>
                 
                 <ButtonGroup id='financial-button-group'>

@@ -2,7 +2,7 @@
     width: 60rem;
 }
 
-#financial-married-fieldset, #financial-deduction-fieldset {
+#financial-married-fieldset, #financial-deduction-fieldset, #financial-aotc-fieldset, #financial-clean-fieldset {
     margin-top: 1.5rem;
 }
 

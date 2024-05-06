@@ -29,8 +29,36 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
             })
         
         financialInformationService.getFinancialInformationByUserId(userId)
-            .then((financialInformation) => {
-                dispatch(updateFinancialInformation(financialInformation[0]))
+            .then((response) => {
+                // if defaults are true then make the corresponsing field an empty string
+                if (response[0].incomeW2Default) {
+                    response[0].incomeW2 = '';
+                }
+                if (response[0].withholdingsW2Default) {
+                    response[0].withholdingsW2 = '';
+                }
+                if (response[0].income1099Default) {
+                    response[0].income1099 = '';
+                }
+                if (response[0].deductionsDefault) {
+                    response[0].deductions = '';
+                }
+                if (response[0].marriedDefault) {
+                    response[0].married = '';
+                }
+                if (response[0].standardDeductionDefault) {
+                    response[0].standardDeduction = '';
+                }
+                if (response[0].dependentsDefault) {
+                    response[0].dependents = '';
+                }
+                if (response[0].aotcDefault) {
+                    response[0].aotc = '';
+                }
+                if (response[0].cleanEnergyDefault) {
+                    response[0].cleanEnergy = '';
+                }
+                dispatch(updateFinancialInformation(response[0]))
             })
     },[])
 
@@ -62,9 +90,13 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
     const containsWithholdingsW2 = (financialInformation.withholdingsW2 !== '' ? true : false)
     const containsIncome1099 = (financialInformation.income1099 !== '' ? true : false)
     const containsDeductions = (financialInformation.deductions !== '' ? true : false)
+    const containsDependents = (financialInformation.dependents !== '' ? true : false)
     const containsMarried = (financialInformation.married !== '' ? true : false)
     const containsStandardDeduction = (financialInformation.standardDeduction !== '' ? true : false)
-    const hasAllFinancialRequirements = containsIncomeW2 && containsWithholdingsW2 && containsIncome1099 && containsDeductions && containsMarried && containsStandardDeduction
+    const containsAotc = (financialInformation.aotc !== '' ? true : false)
+    const containsCleanEnergy = (financialInformation.cleanEnergy !== '' ? true : false)
+    
+    const hasAllFinancialRequirements = containsIncomeW2 && containsWithholdingsW2 && containsIncome1099 && containsDeductions && containsDependents && containsMarried && containsStandardDeduction && containsAotc && containsCleanEnergy
 
     const financialRequirementsAlert = <Alert className='alert' type='error' heading='Financial Information Requirements' headingLevel='h4' validation>
         <ul>
@@ -72,8 +104,11 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
             {containsWithholdingsW2 ? null : <li>You must enter your W2 Withholdings</li>}
             {containsIncome1099 ? null : <li>You must enter your 1099 Income</li>}
             {containsDeductions ? null : <li>You must enter your 1099 Deductions</li>}
+            {containsDependents ? null : <li>You must enter your number of dependents</li>}
             {containsMarried ? null : <li>You must enter your Marital Status</li>}
             {containsStandardDeduction ? null : <li>You must enter your Deduction Type</li>}
+            {containsMarried ? null : <li>You must enter your American Oppurtunity Tax Credit information</li>}
+            {containsMarried ? null : <li>You must enter your Clean Energy Tax Credit information</li>}
         </ul>
     </Alert>
 
@@ -118,6 +153,28 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
             return 'Standard';
         } else if (standardDeduction === false) {
             return 'Itemized';
+        }
+    }
+
+    // Converts the standardDeduction boolean into a string for the information review
+    const aotcStatus = (aotc : any) => {
+        if (aotc === '') {
+            return '-';
+        } else if (aotc === true) {
+            return 'Yes';
+        } else if (aotc === false) {
+            return 'No';
+        }
+    }
+
+    // Converts the standardDeduction boolean into a string for the information review
+    const cleanEnergyStatus = (cleanEnergy : any) => {
+        if (cleanEnergy === '') {
+            return '-';
+        } else if (cleanEnergy === true) {
+            return 'Yes';
+        } else if (cleanEnergy === false) {
+            return 'No';
         }
     }
 
@@ -200,12 +257,24 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
                         <td>{financialInformation.deductions === '' ? '-' : '$'}{financialInformation.deductions}</td>
                     </tr>
                     <tr>
+                        <td>{t('financialInformationForm.dependents')}</td>
+                        <td>{financialInformation.dependents === '' ? '-' : ''}{financialInformation.dependents}</td>
+                    </tr>
+                    <tr>
                         <td>{t('review.maritalStatus')}</td>
                         <td>{maritalStatus(financialInformation.married)}</td>
                     </tr>
                     <tr>
                         <td>{t('review.deductionType')}</td>
                         <td>{deductionType(financialInformation.standardDeduction)}</td>
+                    </tr>
+                    <tr>
+                        <td>{t('financialInformationForm.aotc')}</td>
+                        <td>{aotcStatus(financialInformation.aotc)}</td>
+                    </tr>
+                    <tr>
+                        <td>{t('financialInformationForm.cleanEnergy')}</td>
+                        <td>{cleanEnergyStatus(financialInformation.cleanEnergy)}</td>
                     </tr>
 
                 </tbody>
