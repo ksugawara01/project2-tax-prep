@@ -1,6 +1,7 @@
 import axios from 'axios'
+import base from '../baseUrl'
 
-const baseUrl = 'http://localhost:8080/users'
+const baseUrl = base + '/users';
 
 // Create new user
 const createUser = (newUser : any) => {

@@ -1,6 +1,7 @@
 import axios from 'axios'
+import base from '../baseUrl'
 
-const baseUrl = 'http://localhost:8080/financial-information'
+const baseUrl = base + '/financial-information';
 
 // Create new financial information
 const createFinancialInformation = (newFinancialInformation : any) => {
