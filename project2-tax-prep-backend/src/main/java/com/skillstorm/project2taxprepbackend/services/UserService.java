@@ -1,5 +1,7 @@
 package com.skillstorm.project2taxprepbackend.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,18 @@ public class UserService {
         User newUser = userRepository.save(user);
 
         return newUser;
+    }
+
+    // Get user info by id
+    public User getUserById(int userId) {
+        Optional<User> user = userRepository.findById(userId);
+
+        if (user.isPresent()) {
+            return user.get();
+        }
+
+        return null;
+
     }
 
     // Update a user in the database
