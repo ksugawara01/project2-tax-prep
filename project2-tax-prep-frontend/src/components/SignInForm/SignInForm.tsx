@@ -1,12 +1,11 @@
 import { Button, Form, Label, TextInput } from "@trussworks/react-uswds";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function SignInForm() {
     const { t } = useTranslation();
 
-    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         username: '',
@@ -31,7 +30,7 @@ export default function SignInForm() {
 
             <p className="text-center">
                 {t('signInForm.noAccount')}
-                  <Link to='/'>{t('signInForm.createAccount')}</Link>.
+                  <Link to='/create-account'>{t('signInForm.createAccount')}</Link>.
                 </p>
 
             <Form id='create-account-form' onSubmit={handleSubmit} >

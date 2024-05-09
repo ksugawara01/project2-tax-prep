@@ -9,3 +9,7 @@ th, td, tr {
 .alert {
     width: 100%
 }
+
+#review-motion {
+    width: 60rem;
+}

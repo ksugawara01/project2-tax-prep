@@ -11,7 +11,6 @@ import financialInformationService from '../../services/financial-information'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateFinancialInformation } from '../../slices/financialInformationSlice'
 
-
 export default function ResultsPage() {
 
     // Select personal information from the store
