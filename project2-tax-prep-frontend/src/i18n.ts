@@ -78,7 +78,7 @@ i18n
                     username: 'Username',
                     email: 'Email Address',
                     password: 'Create Password',
-                    confirmPassword: 'Re-type Password',
+                    confirmPassword: 'Confirm Password',
                     alreadyHaveAccount: 'Already have an account? ',
                     signIn: 'Sign in'
                 },
