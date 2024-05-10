@@ -9,8 +9,9 @@ import personalInformationService from '../../services/personal-information';
 import financialInformationService from '../../services/financial-information';
 import { updatePersonalInformation } from '../../slices/personalInformationSlice';
 import { updateFinancialInformation } from '../../slices/financialInformationSlice';
+import { motion } from 'framer-motion';
 
- export default function ReviewPage() {
+export default function ReviewPage() {
 
     // Select personal information from the store
     const personalInformation = useSelector((store : any) => store.personalInformation)
@@ -19,16 +20,15 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
 
     const dispatch = useDispatch();
 
-    //temporary
-    const userId = 4;
+    const currentUser = useSelector((store : any) => store.currentUser);
 
     useEffect(() => {
-        personalInformationService.getPersonalInformationByUserId(userId)
+        personalInformationService.getPersonalInformationByUserId(currentUser.userId)
             .then((personalInformation : any) => {
                 dispatch(updatePersonalInformation(personalInformation[0]));
             })
         
-        financialInformationService.getFinancialInformationByUserId(userId)
+        financialInformationService.getFinancialInformationByUserId(currentUser.userId)
             .then((response) => {
                 // if defaults are true then make the corresponsing field an empty string
                 if (response[0].incomeW2Default) {
@@ -178,9 +178,15 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
         }
     }
 
-    return(
-        <div className='flex-column-center'>
-            <TrussStepIndicator personalStatus='complete' financialStatus='complete' reviewStatus='current'/>
+    return(<>
+        <TrussStepIndicator personalStatus='complete' financialStatus='complete' reviewStatus='current'/>
+        <motion.div className='flex-column-center' id='review-motion'
+                initial={{opacity:0}}
+                animate={{opacity:1, transition: {duration: .4}}}
+            >
+
+            
+
             <h1>{t('review.reviewInformation')}</h1>
 
             {hasAllPersonalRequirements ? null : personalRequirementsAlert}
@@ -290,6 +296,7 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
                     }
                 </ButtonGroup>
 
-        </div>
+        </motion.div>
+        </>
     )
  }

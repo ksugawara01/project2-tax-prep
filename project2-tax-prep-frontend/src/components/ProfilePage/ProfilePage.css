@@ -1,0 +1,30 @@
+#profile-picture2 {
+    width: 4.5rem;
+}
+
+#profile {
+    display: flex;
+    align-self: center;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-top: 4rem;
+}
+
+#change-user-label {
+    display: flex;
+    justify-self: end;
+    margin-top: 5rem;
+    font-weight: bold;
+}
+
+#change-user-container {
+    display: flex;
+}
+
+#change-user-button {
+    margin-top: 1rem;
+}
+
+.edit-submit-button {
+    margin-top: 2rem;
+}

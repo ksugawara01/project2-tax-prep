@@ -1,10 +1,13 @@
-import { Header, Title, PrimaryNav, LanguageSelector } from '@trussworks/react-uswds'
+import { Header, PrimaryNav, LanguageSelector } from '@trussworks/react-uswds'
 import { useEffect, useState } from 'react'
 import './TrussHeader.css'
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCurrentLanguage } from '../../slices/currentLanguageSlice';
 import { Link } from 'react-router-dom';
+import headerLogo from '../../assets/logo.png'
+import userPicture from '../../assets/profile-picture.png'
+import userService from '../../services/users'
 
 export default function TrussHeader() {
 
@@ -16,6 +19,21 @@ export default function TrussHeader() {
 
     const [expanded, setExpanded] = useState(false);
 
+    const currentUser = useSelector((store : any) => store.currentUser);
+
+    const [profile, setProfile] = useState({
+        userId: '',
+        username: '',
+        email: '',
+    });
+
+    useEffect(()=> {
+        userService.getUserById(currentUser.userId)
+        .then((response)=>{
+            setProfile(response);
+        })
+    },[currentUser])
+
     const onClick = (): void => setExpanded(prvExpanded => !prvExpanded);
 
         // Log financialInformation whenever it changes
@@ -24,11 +42,11 @@ export default function TrussHeader() {
       }, [currentLanguage]);
 
     const testItemsMenu = [
-      <Link to='/' id='test' className='usa-nav__link'>
-          <span>Home</span>
+      <Link to='/' id='header-home' className='usa-nav__link'>
+          <span>{t('header.home')}</span>
       </Link>,
-      <Link to='/create-account' className='usa-nav__link'>
-          <span>Sign Up</span>
+      <Link to='/create-account' id='header-create-account' className='usa-nav__link'>
+          <span>{t('header.signUp')}</span>
       </Link>,
       <LanguageSelector id='language-selector'
           label={t('header.languages')}
@@ -51,14 +69,17 @@ export default function TrussHeader() {
                 on_click: function Ga(){dispatch(updateCurrentLanguage({language: 'jp'}))}
               }
           ]}
-      />
+      />,
+      <Link to='/profile' id='header-create-account' className='usa-nav__link'>
+          <img src={userPicture} id='profile-picture'/><span>{profile.username}</span>
+      </Link>
     ];
 
     return(
         <Header id='truss-header' basic={true} showMobileOverlay={expanded}>
             <div className='usa-nav-container'>
                 <div className='usa-navbar'>
-                    <Link id='header-company-name' to='/'>Fake Tax Company</Link>
+                    <Link id='header-company-name' to='/'><img src={headerLogo} /></Link>
                 </div>
                 <PrimaryNav id='primary-nav' items={testItemsMenu} mobileExpanded={expanded} onToggleMobileNav={onClick}></PrimaryNav>
             </div>

@@ -78,7 +78,7 @@ i18n
                     username: 'Username',
                     email: 'Email Address',
                     password: 'Create Password',
-                    confirmPassword: 'Re-type Password',
+                    confirmPassword: 'Confirm Password',
                     alreadyHaveAccount: 'Already have an account? ',
                     signIn: 'Sign in'
                 },
@@ -90,7 +90,12 @@ i18n
                     createAccount: 'Create Account'
                 },
                 header: {
-                    languages: 'Languages'
+                    languages: 'Languages',
+                    home: 'Home',
+                    signUp: 'Sign Up',
+                    logout: 'Logout',
+                    signIn: 'Sign In',
+                    createAccount: 'Create Account'
                 },
                 footer: {
                     links: 'License Agreement | Privacy | Manage cookies | Security | Cobrowse | Give feedback'
@@ -138,11 +143,11 @@ i18n
                     isStandardDeduction: '¿Deducción estándar o detallada?',
                     standard: 'Estándar',
                     itemized: 'Detallada',
-                    dependents: '',
-                    aotc: '',
-                    cleanEnergy: '',
-                    yes: '',
-                    no: ''
+                    dependents: 'dependientas',
+                    aotc: '¿Califica para el crédito fiscal American Oppurtunity?',
+                    cleanEnergy: '¿Califica para el crédito energético para mejoras del hogar?',
+                    yes: 'Sí',
+                    no: 'No'
                 },
                 review: {
                     reviewInformation: 'Revisa tu información',
@@ -175,7 +180,12 @@ i18n
                     createAccount: 'Crear una Cuenta'
                 },
                 header: {
-                    languages: 'Idiomas'
+                    languages: 'Idiomas',
+                    home: 'Hogar',
+                    signUp: 'Inscribirse',
+                    logout: 'Cerrar Sesión',
+                    signIn: 'Iniciar Sesión',
+                    createAccount: 'Crear una Cuenta'
                 },
                 footer: {
                     links: 'Acuerdo de licencia | Privacidad | Gestionar Cookies | Seguridad | Explorar | Dar Opinion'
@@ -223,11 +233,11 @@ i18n
                     isStandardDeduction: '標準控除または項目別控除?',
                     standard: '標準',
                     itemized: '項目別',
-                    dependents: '',
-                    aotc: '',
-                    cleanEnergy: '',
-                    yes: '',
-                    no: ''
+                    dependents: '口数',
+                    aotc: 'あなたはアメリカの機会税額控除を受ける資格がありますか?',
+                    cleanEnergy: 'クリーン ホーム エネルギー クレジットの対象になりますか?',
+                    yes: 'はい',
+                    no: 'いいえ'
                 },
                 review: {
                     reviewInformation: '情報を確認する',
@@ -260,7 +270,12 @@ i18n
                     createAccount: 'アカウントを作成する'
                 },
                 header: {
-                    languages: '言語'
+                    languages: '言語',
+                    home: '家',
+                    signUp: 'サインアップ',
+                    logout: 'ログアウト',
+                    signIn: 'サインイン',
+                    createAccount: 'アカウントを作成する'
                 },
                 footer: {
                     links: 'ライセンス契約 |プライバシー | クッキーを管理する |セキュリティ |コブラウズ |フィードバックを与えます'

@@ -7,7 +7,7 @@ export default function Footer() {
     return(
         <div id='footer'>
             <div >{t('footer.links')}</div>
-            <div>© 2024 Fake Tax Company</div>
+            <div>© Rapid Returns 2024</div>
         </div>
     )
 }

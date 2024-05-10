@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { updateFinancialInformation } from '../../slices/financialInformationSlice';
 import financialInformationService from '../../services/financial-information';
+import { motion } from 'framer-motion';
 
 
  export default function FinancialInformationForm() {
@@ -22,12 +23,11 @@ import financialInformationService from '../../services/financial-information';
 
     const [formData, setFormData] = useState(financialInformation)
 
-    // temporary
-    const userId = 4;
+    const currentUser = useSelector((store : any) => store.currentUser);
 
     // Get financial information from the database on mount, if no financial information exists for the current user then create it
     useEffect(() => {
-        financialInformationService.getFinancialInformationByUserId(userId)
+        financialInformationService.getFinancialInformationByUserId(currentUser.userId)
         .then((response : any) => {
             // financial information exists
             if (response[1] === 200) {
@@ -59,7 +59,6 @@ import financialInformationService from '../../services/financial-information';
                 if (response[0].cleanEnergyDefault) {
                     response[0].cleanEnergy = '';
                 }
-                console.log('edited response[0]', response[0])
 
                 // update the store and the form data with the returned financial information
                 dispatch(updateFinancialInformation(response[0]));
@@ -86,7 +85,7 @@ import financialInformationService from '../../services/financial-information';
                     dependentsDefault: true,
                     aotcDefault: true,
                     cleanEnergyDefault: true,
-                    userId: userId
+                    userId: currentUser.userId
                 }
 
                 // add new financial information to the database
@@ -102,9 +101,6 @@ import financialInformationService from '../../services/financial-information';
                     response.dependents = '';
                     response.aotc = '';
                     response.cleanEnergy = '';
-
-                    console.log('edited response', response)
-
                     // update the store and the form data with the newly created financial information
                     dispatch(updateFinancialInformation(response));
                     setFormData(response);
@@ -239,51 +235,57 @@ import financialInformationService from '../../services/financial-information';
     return(
         <>
             <TrussStepIndicator personalStatus='complete' financialStatus='current'/>
-            <Form id='financial-form' onSubmit={handleSubmit} >
-                <Label htmlFor='incomeW2'>{t('financialInformationForm.incomeW2')}</Label>
-                <TextInput id='financial-w2-income' name='incomeW2' type='number' value={formData.incomeW2} onChange={handleFormChange}/>
 
-                <Label htmlFor='withholdingsW2'>{t('financialInformationForm.withholdingsW2')}</Label>
-                <TextInput id='financial-w2-withholdings' name='withholdingsW2' type='number' value={formData.withholdingsW2} onChange={handleFormChange}/>
+            <motion.div
+                initial={{opacity:0}}
+                animate={{opacity:1, transition: {duration: .4}}}
+            >
+                <Form id='financial-form' onSubmit={handleSubmit} >
+                    <Label htmlFor='incomeW2'>{t('financialInformationForm.incomeW2')}</Label>
+                    <TextInput id='financial-w2-income' name='incomeW2' type='number' value={formData.incomeW2} onChange={handleFormChange}/>
 
-                <Label htmlFor='income1099'>{t('financialInformationForm.income1099')}</Label>
-                <TextInput id='financial-1099-income' name='income1099' type='number' value={formData.income1099} onChange={handleFormChange}/>
+                    <Label htmlFor='withholdingsW2'>{t('financialInformationForm.withholdingsW2')}</Label>
+                    <TextInput id='financial-w2-withholdings' name='withholdingsW2' type='number' value={formData.withholdingsW2} onChange={handleFormChange}/>
 
-                <Label htmlFor='deductions'>{t('financialInformationForm.deductions')}</Label>
-                <TextInput id='financial-1099-deduction' name='deductions' type='number' value={formData.deductions} onChange={handleFormChange}/>
+                    <Label htmlFor='income1099'>{t('financialInformationForm.income1099')}</Label>
+                    <TextInput id='financial-1099-income' name='income1099' type='number' value={formData.income1099} onChange={handleFormChange}/>
 
-                <Label htmlFor='dependents'>{t('financialInformationForm.dependents')}</Label>
-                <TextInput id='financial-credits-dependents' name='dependents' type='number' value={formData.dependents} onChange={handleFormChange}/>
+                    <Label htmlFor='deductions'>{t('financialInformationForm.deductions')}</Label>
+                    <TextInput id='financial-1099-deduction' name='deductions' type='number' value={formData.deductions} onChange={handleFormChange}/>
 
-                <Fieldset id='financial-married-fieldset' className='radio-fieldset'>
-                    <legend>{t('financialInformationForm.isMarried')}</legend>
-                    <Radio id='single-radio' name='married' label={t('financialInformationForm.single')} value='false' checked={formData.married===false} onChange={handleFormChange}/>
-                    <Radio id='married-radio' name='married' label={t('financialInformationForm.married')} value='true' checked={formData.married===true} onChange={handleFormChange}/>
-                </Fieldset>
+                    <Label htmlFor='dependents'>{t('financialInformationForm.dependents')}</Label>
+                    <TextInput id='financial-credits-dependents' name='dependents' type='number' value={formData.dependents} onChange={handleFormChange}/>
 
-                <Fieldset id='financial-deduction-fieldset' className='radio-fieldset'>
-                    <legend>{t('financialInformationForm.isStandardDeduction')}</legend>
-                    <Radio id='standard-radio' name='standardDeduction' label={t('financialInformationForm.standard')} value='true'  checked={formData.standardDeduction===true} onChange={handleFormChange}/>
-                    <Radio id='itemized-radio' name='standardDeduction' label={t('financialInformationForm.itemized')} value='false' checked={formData.standardDeduction===false} onChange={handleFormChange}/>
-                </Fieldset>
+                    <Fieldset id='financial-married-fieldset' className='radio-fieldset'>
+                        <legend>{t('financialInformationForm.isMarried')}</legend>
+                        <Radio id='single-radio' name='married' label={t('financialInformationForm.single')} value='false' checked={formData.married===false} onChange={handleFormChange}/>
+                        <Radio id='married-radio' name='married' label={t('financialInformationForm.married')} value='true' checked={formData.married===true} onChange={handleFormChange}/>
+                    </Fieldset>
 
-                <Fieldset id='financial-aotc-fieldset' className='radio-fieldset'>
-                    <legend>{t('financialInformationForm.aotc')}</legend>
-                    <Radio id='aotc-yes-radio' name='aotc' label={t('financialInformationForm.yes')} value='true' checked={formData.aotc===true} onChange={handleFormChange}/>
-                    <Radio id='aotc-no-radiox' name='aotc' label={t('financialInformationForm.no')} value='false' checked={formData.aotc===false} onChange={handleFormChange}/>
-                </Fieldset>
+                    <Fieldset id='financial-deduction-fieldset' className='radio-fieldset'>
+                        <legend>{t('financialInformationForm.isStandardDeduction')}</legend>
+                        <Radio id='standard-radio' name='standardDeduction' label={t('financialInformationForm.standard')} value='true'  checked={formData.standardDeduction===true} onChange={handleFormChange}/>
+                        <Radio id='itemized-radio' name='standardDeduction' label={t('financialInformationForm.itemized')} value='false' checked={formData.standardDeduction===false} onChange={handleFormChange}/>
+                    </Fieldset>
 
-                <Fieldset id='financial-clean-fieldset' className='radio-fieldset'>
-                    <legend>{t('financialInformationForm.cleanEnergy')}</legend>
-                    <Radio id='clean-yes-radio' name='cleanEnergy' label={t('financialInformationForm.yes')} value='true'  checked={formData.cleanEnergy===true} onChange={handleFormChange}/>
-                    <Radio id='clean-no-radio' name='cleanEnergy' label={t('financialInformationForm.no')} value='false' checked={formData.cleanEnergy===false} onChange={handleFormChange}/>
-                </Fieldset>
-                
-                <ButtonGroup id='financial-button-group'>
-                    <Button type='submit' outline onClick={handleBack}>{t('button.back')}</Button>
-                    <Button type='submit' onClick={handleContinue}>{t('button.continue')}</Button>
-                </ButtonGroup>
-            </Form>
+                    <Fieldset id='financial-aotc-fieldset' className='radio-fieldset'>
+                        <legend>{t('financialInformationForm.aotc')}</legend>
+                        <Radio id='aotc-yes-radio' name='aotc' label={t('financialInformationForm.yes')} value='true' checked={formData.aotc===true} onChange={handleFormChange}/>
+                        <Radio id='aotc-no-radiox' name='aotc' label={t('financialInformationForm.no')} value='false' checked={formData.aotc===false} onChange={handleFormChange}/>
+                    </Fieldset>
+
+                    <Fieldset id='financial-clean-fieldset' className='radio-fieldset'>
+                        <legend>{t('financialInformationForm.cleanEnergy')}</legend>
+                        <Radio id='clean-yes-radio' name='cleanEnergy' label={t('financialInformationForm.yes')} value='true'  checked={formData.cleanEnergy===true} onChange={handleFormChange}/>
+                        <Radio id='clean-no-radio' name='cleanEnergy' label={t('financialInformationForm.no')} value='false' checked={formData.cleanEnergy===false} onChange={handleFormChange}/>
+                    </Fieldset>
+                    
+                    <ButtonGroup id='financial-button-group'>
+                        <Button type='submit' outline onClick={handleBack}>{t('button.back')}</Button>
+                        <Button type='submit' onClick={handleContinue}>{t('button.continue')}</Button>
+                    </ButtonGroup>
+                </Form>
+            </motion.div>
         </>
     )
  }

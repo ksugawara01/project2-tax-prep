@@ -1,6 +1,7 @@
 import axios from 'axios'
+import base from '../baseUrl'
 
-const baseUrl = 'http://localhost:8080/calculate'
+const baseUrl = base + '/calculate';
 
 // Get the single filer tax amount
 const getSingleFilerTax = (taxableIncome : number) => {

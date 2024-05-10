@@ -1,6 +1,7 @@
 import axios from 'axios'
+import base from '../baseUrl'
 
-const baseUrl = 'http://localhost:8080/return-statuses'
+const baseUrl = base + '/return-statuses';
 
 // Create new return status
 const createReturnStatus = (newReturnStatus : any) => {

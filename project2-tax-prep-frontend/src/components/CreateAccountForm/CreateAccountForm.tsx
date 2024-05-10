@@ -1,14 +1,12 @@
-import { Form, Fieldset, Label, TextInput, Checkbox, Button, ButtonGroup, DatePicker, ErrorMessage, FormGroup, TextInputMask } from '@trussworks/react-uswds'
+import { Form, Label, TextInput, Button } from '@trussworks/react-uswds'
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './CreateAccountForm.css'
 
 export default function CreateAccountForm() {
 
     const { t } = useTranslation();
-
-    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         username: '',
@@ -35,7 +33,7 @@ export default function CreateAccountForm() {
 
             <p className="text-center">
                 {t('createAccountForm.alreadyHaveAccount')}
-                  <Link to='/'>{t('createAccountForm.signIn')}</Link>.
+                  <Link to='/sign-in'>{t('createAccountForm.signIn')}</Link>.
                 </p>
 
             <Form id='create-account-form' onSubmit={handleSubmit} >
