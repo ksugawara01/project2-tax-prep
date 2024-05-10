@@ -1,0 +1,25 @@
+.result-categories {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+}
+
+#result-congratulations {
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+}
+
+#positive-refund {
+    color: green;
+    font-weight: bold;
+    font-size: 4rem;
+}
+
+#negative-refund {
+    color: rgb(190, 0, 0);
+    font-weight: bold;
+    font-size: 4rem;
+}
