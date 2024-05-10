@@ -13,7 +13,7 @@ import { updateFinancialInformation } from '../../slices/financialInformationSli
 
 export default function ResultsPage() {
 
-    // Select personal information from the store
+    // Select financial information from the store
     const financialInformation = useSelector((store : any) => store.financialInformation);
 
     const [taxesOwed, setTaxesOwed] = useState(1);
@@ -25,12 +25,10 @@ export default function ResultsPage() {
 
     const dispatch = useDispatch();
 
-    // temporary
-    const userId = 4;
-
+    const currentUser = useSelector((store : any) => store.currentUser);
     
     useEffect(() => {
-        financialInformationService.getFinancialInformationByUserId(userId)
+        financialInformationService.getFinancialInformationByUserId(currentUser.userId)
             .then((financialInformation) => {
                 dispatch(updateFinancialInformation(financialInformation[0]))
             })

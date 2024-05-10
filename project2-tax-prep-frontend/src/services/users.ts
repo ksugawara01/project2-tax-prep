@@ -9,6 +9,12 @@ const createUser = (newUser : any) => {
     return request.then(response => response.data)
 }
 
+// get user info by Id
+const getUserById = (userId : any) => {
+    const request = axios.get(`${baseUrl}/${userId}`)
+    return request.then(response => response.data)
+}
+
 // Update user
 const updateUser = (user : any) => {
     const request = axios.put(baseUrl, user)
@@ -21,4 +27,4 @@ const deleteUser = (user : any) => {
     return request.then(response => response.data)
 }
 
-export default { createUser, updateUser, deleteUser }
+export default { createUser, getUserById, updateUser, deleteUser }

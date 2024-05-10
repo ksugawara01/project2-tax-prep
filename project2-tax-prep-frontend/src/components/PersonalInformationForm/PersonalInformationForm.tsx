@@ -20,6 +20,8 @@ import { motion } from 'framer-motion';
     // Select personal information from the store
     const personalInformation = useSelector((store : any) => store.personalInformation)
 
+    const currentUser = useSelector((store : any) => store.currentUser);
+    
     const dispatch = useDispatch();
 
     const [formData, setFormData] = useState(personalInformation)
@@ -34,12 +36,9 @@ import { motion } from 'framer-motion';
     const hasSsnError = (!ssnRegex.test(formData.ssn)) && formData.ssn !== '';
     const hasZipError = (!zipRegex.test(formData.zip)) && formData.zip !== '';
 
-    // temporary
-    const userId = 4;
-
     // Get personal information from the database on mount, if no personal information exists for the current user then create it
     useEffect(() => {
-        personalInformationService.getPersonalInformationByUserId(userId)
+        personalInformationService.getPersonalInformationByUserId(currentUser.userId)
         .then((response : any) => {
             // personal information exists
             if (response[1] === 200) {
@@ -58,7 +57,7 @@ import { motion } from 'framer-motion';
                     zip: '',
                     birthDate: '',
                     ssn: '',
-                    userId: userId
+                    userId: currentUser.userId
                 }
                 // add new personal information to the database
                 personalInformationService.createPersonalInformation(newPersonalInformation)
@@ -76,7 +75,6 @@ import { motion } from 'framer-motion';
         const { name, value } = event.target
         const newValue = value
         setFormData((prevState : any) => ({ ...prevState, [name]: newValue }))
-        console.log('formData', formData);
     }
 
     const handleDateChange = (event : any) => {

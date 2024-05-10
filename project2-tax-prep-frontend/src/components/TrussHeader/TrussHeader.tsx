@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateCurrentLanguage } from '../../slices/currentLanguageSlice';
 import { Link } from 'react-router-dom';
 import headerLogo from '../../assets/logo.png'
+import userPicture from '../../assets/profile-picture.png'
+import userService from '../../services/users'
 
 export default function TrussHeader() {
 
@@ -16,6 +18,21 @@ export default function TrussHeader() {
     const dispatch = useDispatch();
 
     const [expanded, setExpanded] = useState(false);
+
+    const currentUser = useSelector((store : any) => store.currentUser);
+
+    const [profile, setProfile] = useState({
+        userId: '',
+        username: '',
+        email: '',
+    });
+
+    useEffect(()=> {
+        userService.getUserById(currentUser.userId)
+        .then((response)=>{
+            setProfile(response);
+        })
+    },[currentUser])
 
     const onClick = (): void => setExpanded(prvExpanded => !prvExpanded);
 
@@ -52,7 +69,10 @@ export default function TrussHeader() {
                 on_click: function Ga(){dispatch(updateCurrentLanguage({language: 'jp'}))}
               }
           ]}
-      />
+      />,
+      <Link to='/profile' id='header-create-account' className='usa-nav__link'>
+          <img src={userPicture} id='profile-picture'/><span>{profile.username}</span>
+      </Link>
     ];
 
     return(

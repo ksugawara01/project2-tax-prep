@@ -20,16 +20,15 @@ export default function ReviewPage() {
 
     const dispatch = useDispatch();
 
-    //temporary
-    const userId = 4;
+    const currentUser = useSelector((store : any) => store.currentUser);
 
     useEffect(() => {
-        personalInformationService.getPersonalInformationByUserId(userId)
+        personalInformationService.getPersonalInformationByUserId(currentUser.userId)
             .then((personalInformation : any) => {
                 dispatch(updatePersonalInformation(personalInformation[0]));
             })
         
-        financialInformationService.getFinancialInformationByUserId(userId)
+        financialInformationService.getFinancialInformationByUserId(currentUser.userId)
             .then((response) => {
                 // if defaults are true then make the corresponsing field an empty string
                 if (response[0].incomeW2Default) {

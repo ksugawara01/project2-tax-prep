@@ -6,6 +6,7 @@ import PersonalInformationForm from "./PersonalInformationForm/PersonalInformati
 import ResultsPage from "./ResultsPage/ResultsPage.tsx";
 import ReviewPage from "./ReviewPage/ReviewPage.tsx";
 import SignInForm from "./SignInForm/SignInForm.tsx";
+import ProfilePage from "./ProfilePage/ProfilePage.tsx";
 import { AnimatePresence } from 'framer-motion';
 
 // Component to allow framer-motion animations
@@ -22,6 +23,7 @@ export default function AnimatedRoutes() {
                 <Route path='/results' element={<ResultsPage />} />
                 <Route path='/sign-in' element={<SignInForm />} />
                 <Route path='/create-account' element={<CreateAccountForm />} /> 
+                <Route path='/profile' element={<ProfilePage />} />
             </Routes>
         </AnimatePresence>
     )

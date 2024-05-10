@@ -23,12 +23,11 @@ import { motion } from 'framer-motion';
 
     const [formData, setFormData] = useState(financialInformation)
 
-    // temporary
-    const userId = 4;
+    const currentUser = useSelector((store : any) => store.currentUser);
 
     // Get financial information from the database on mount, if no financial information exists for the current user then create it
     useEffect(() => {
-        financialInformationService.getFinancialInformationByUserId(userId)
+        financialInformationService.getFinancialInformationByUserId(currentUser.userId)
         .then((response : any) => {
             // financial information exists
             if (response[1] === 200) {
@@ -60,7 +59,6 @@ import { motion } from 'framer-motion';
                 if (response[0].cleanEnergyDefault) {
                     response[0].cleanEnergy = '';
                 }
-                console.log('edited response[0]', response[0])
 
                 // update the store and the form data with the returned financial information
                 dispatch(updateFinancialInformation(response[0]));
@@ -87,7 +85,7 @@ import { motion } from 'framer-motion';
                     dependentsDefault: true,
                     aotcDefault: true,
                     cleanEnergyDefault: true,
-                    userId: userId
+                    userId: currentUser.userId
                 }
 
                 // add new financial information to the database
@@ -103,9 +101,6 @@ import { motion } from 'framer-motion';
                     response.dependents = '';
                     response.aotc = '';
                     response.cleanEnergy = '';
-
-                    console.log('edited response', response)
-
                     // update the store and the form data with the newly created financial information
                     dispatch(updateFinancialInformation(response));
                     setFormData(response);
